@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { toast } from "react-toastify";
+
 import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +13,7 @@ import EnginesFilter from "./enginesfilter";
 import CapacityFilter from "./capacityfilter";
 import ResetFilters from "./resetfilters";
 
-import { getForklifts } from "../services/fakeForkliftsService";
+import { getForklifts } from "../services/forkliftsService";
 import { getEngTypes } from "../services/fakeEngTypeFilterService";
 import { getCapacityFilters } from "../services/fakeCapacityFilterService";
 
@@ -42,9 +44,11 @@ class Forklifts extends Component {
     forklifts: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { data: forklifts } = await getForklifts();
+    //console.log("Forklifts Returned", forklifts);
     this.setState({
-      forklifts: getForklifts(),
+      forklifts,
       engTypesFilter: getEngTypes(),
       capacityFilter: getCapacityFilters()
     });
@@ -155,11 +159,9 @@ class Forklifts extends Component {
                   {values.models.map(g => (
                     <li key={g._id}>
                       <Link to="/kbd">
-                        <Button>{g.modelName}</Button>
+                        <Button>{g.model}</Button>
                       </Link>{" "}
                       {g.capacity} {g.engType}
-                      {this.state.selectedEngine &&
-                        this.state.selectedEngine.name}
                     </li>
                   ))}
                 </ul>
