@@ -37,6 +37,11 @@ const CapacityFilter = props => {
     selectedCapacityFilter
   } = props;
 
+  var aa = "";
+  if (selectedCapacityFilter) {
+    aa = selectedCapacityFilter.capFilter;
+  }
+
   const classes = useStyles();
 
   return (
@@ -53,10 +58,12 @@ const CapacityFilter = props => {
         >
           {capacityfilters.map(capacityfilter => (
             <FormControlLabel
+              key={capacityfilter._id}
               value={capacityfilter.capFilter}
               control={<Radio color="primary" />}
               label={capacityfilter.capFilter}
               onChange={() => onCapacityFilterSel(capacityfilter)}
+              checked={aa === capacityfilter.capFilter}
             />
           ))}
         </RadioGroup>

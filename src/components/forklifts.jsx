@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { toast } from "react-toastify";
 
 import { Link } from "react-router-dom";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
 import Grid from "@material-ui/core/Grid";
@@ -18,26 +16,6 @@ import { getEngTypes } from "../services/fakeEngTypeFilterService";
 import { getCapacityFilters } from "../services/fakeCapacityFilterService";
 
 import "typeface-roboto";
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "left"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
 
 class Forklifts extends Component {
   state = {
@@ -64,18 +42,13 @@ class Forklifts extends Component {
   };
 
   handleCapFilter = capfilter => {
-    console.log(
-      "UU",
-      capfilter.capFilter,
-      " ",
-      this.state.selectedCapacityFilter
-    );
     this.setState({ selectedCapacityFilter: capfilter });
   };
 
   handleEngineSel = engine => {
     console.log("ZZ", engine.name);
     this.setState({ selectedEngine: engine });
+    //console.log("ZZZ", this.state.selectedEngine.name);
   };
 
   filterModels(models) {
@@ -90,10 +63,6 @@ class Forklifts extends Component {
           m => m.capacity === this.state.selectedCapacityFilter.capFilter
         )
       : mseng;
-
-    /*const ms = models.map(model => model);*/
-
-    /*console.log("MSENG", mseng);*/
 
     return mscap;
   }
@@ -115,7 +84,7 @@ class Forklifts extends Component {
           models: this.filterModels(values.models)
         })
     );
-    console.log("TTT", this.state.selectedEngine, " ", g);
+    //console.log("TTT", this.state.selectedEngine, " ", g);
 
     /* remove any ranges that have zero models meeting the criteria */
     const tt = g.filter(x => x.models.length > 0);
@@ -125,7 +94,7 @@ class Forklifts extends Component {
 
   render() {
     const t = this.filterEng(this.state.forklifts);
-    console.log("LL", t);
+    //console.log("LL", t);
 
     const { length: count } = this.state.forklifts;
     /*
@@ -142,14 +111,15 @@ class Forklifts extends Component {
             <Typography variant="h2">Forklifts</Typography>
 
             <Typography variant="subtitle1" gutterBottom>
-              There are {count} forklift ranges
+              {/*There are {count} forklift ranges*/}
             </Typography>
+            {/*}
             {this.state.selectedEngine ? (
               <h1>{this.state.selectedEngine.name}</h1>
             ) : null}
             {this.state.selectedCapacityFilter ? (
               <h1>{this.state.selectedCapacityFilter.capFilter}</h1>
-            ) : null}
+            ) : null}*/}
 
             {Object.entries(t).map(([key, values]) => (
               <React.Fragment key={key}>
@@ -158,7 +128,7 @@ class Forklifts extends Component {
                 <ul>
                   {values.models.map(g => (
                     <li key={g._id}>
-                      <Link to="/kbd">
+                      <Link to={{ pathname: "/forkliftdetail/" + g.model }}>
                         <Button>{g.model}</Button>
                       </Link>{" "}
                       {g.capacity} {g.engType}
@@ -174,13 +144,13 @@ class Forklifts extends Component {
             <EnginesFilter
               engines={this.state.engTypesFilter}
               onEngineSel={this.handleEngineSel}
-              selectedEngine={this.selectedEngine}
+              selectedEngine={this.state.selectedEngine}
             />
 
             <CapacityFilter
               capacityfilters={this.state.capacityFilter}
               onCapacityFilterSel={this.handleCapFilter}
-              selectedCapacityFilter={this.selectedCapacityFilter}
+              selectedCapacityFilter={this.state.selectedCapacityFilter}
             />
           </Grid>
         </Grid>

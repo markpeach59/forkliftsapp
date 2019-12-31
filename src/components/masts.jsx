@@ -6,50 +6,47 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-
-import MastSizes from "./mastsizes";
+import Divider from "@material-ui/core/Divider";
 
 const Masts = props => {
   const {
     masts,
-    onMastSel,
+
     selectedMast,
     onMastSizeSel,
     selectedMastSize
   } = props;
 
+  var aa = "";
+  if (selectedMastSize) {
+    aa = selectedMast + " " + selectedMastSize.mastlength;
+    console.log("AAA", aa);
+  }
+
   return (
     <React.Fragment>
-      <h2>Mast Types</h2>
-
       {masts.map(mast => (
         <div key={mast._id}>
-          <h4>{mast.masttype}</h4>
-
           <FormControl component="fieldset">
-            <FormLabel component="legend">Mast Size</FormLabel>
+            <FormLabel component="legend">{mast.masttype}</FormLabel>
 
-            <RadioGroup
-              aria-label="mastsize"
-              name="mastsize"
-              //value={value}
-              //onChange={handleChange}
-              //onClick={() => onMastSizeSel(mastsize)}
-              row={false}
-            >
-              {mast.sizes.map(mastsize => (
+            <RadioGroup aria-label="mastsize" name="mastsize" row={false}>
+              {mast.mastsizes.map(mastsize => (
                 <FormControlLabel
                   key={mastsize._id}
-                  value={mastsize.length}
+                  value={mastsize.mastlength}
                   control={<Radio color="primary" />}
-                  label={mastsize.length}
-                  onChange={() => onMastSizeSel(mastsize)}
+                  label={mastsize.mastlength}
+                  onChange={() => onMastSizeSel(mastsize, mast.masttype)}
+                  checked={aa === mast.masttype + " " + mastsize.mastlength}
                 />
               ))}
             </RadioGroup>
           </FormControl>
         </div>
       ))}
+      <Divider />
+      <br />
     </React.Fragment>
   );
 };

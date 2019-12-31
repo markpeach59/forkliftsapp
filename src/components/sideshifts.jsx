@@ -8,9 +8,16 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Divider from "@material-ui/core/Divider";
 
 const SideShift = props => {
   const { sideshifts, onSideShiftSel, selectedSideShift } = props;
+
+  var aa = "";
+  if (selectedSideShift) {
+    aa = selectedSideShift.sideshifttype;
+    //console.log("AA", selectedEngine.name);
+  }
 
   return (
     <React.Fragment>
@@ -28,15 +35,18 @@ const SideShift = props => {
           {sideshifts.map(sideshift => (
             <FormControlLabel
               key={sideshift._id}
-              value={sideshift.type}
+              value={sideshift.sideshifttype}
               control={<Radio color="primary" />}
-              label={sideshift.type}
-              //checked ={selectedSideShift === {sideshift.type}}
+              label={sideshift.sideshifttype}
+              //checked ={selectedSideShift === {sideshift.sideshifttype}}
               onChange={() => onSideShiftSel(sideshift)}
+              checked={aa === sideshift.sideshifttype}
             />
           ))}
         </RadioGroup>
       </FormControl>
+      <Divider />
+      <br />
     </React.Fragment>
   );
 };

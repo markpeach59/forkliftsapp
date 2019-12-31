@@ -8,34 +8,28 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Divider from "@material-ui/core/Divider";
 
-const Forks = props => {
-  const { forks, onForkSel, selectedFork } = props;
+const Tyres = props => {
+  const { tyres, onTyreSel, selectedTyre } = props;
 
   var aa = "";
-  if (selectedFork) {
-    aa = selectedFork.forklength;
+  if (selectedTyre) {
+    aa = selectedTyre.tyretype;
   }
 
   return (
     <React.Fragment>
       <FormControl component="fieldset">
-        <FormLabel component="legend">Forks</FormLabel>
+        <FormLabel component="legend">Tyres</FormLabel>
 
-        <RadioGroup
-          aria-label="forks"
-          name="forks"
-          //value={value}
-          //onChange={handleChange}
-          row={true}
-        >
-          {forks.map(fork => (
+        <RadioGroup aria-label="tyres" name="tyres" row={true}>
+          {tyres.map(tyre => (
             <FormControlLabel
-              key={fork._id}
-              value={fork.forklength}
+              key={tyre._id}
+              value={tyre.tyretype}
               control={<Radio color="primary" />}
-              label={fork.forklength}
-              onChange={() => onForkSel(fork)}
-              checked={aa === fork.forklength}
+              label={tyre.tyretype}
+              onChange={() => onTyreSel(tyre)}
+              checked={aa === tyre.tyretype}
             />
           ))}
         </RadioGroup>
@@ -46,4 +40,4 @@ const Forks = props => {
   );
 };
 
-export default Forks;
+export default Tyres;

@@ -8,34 +8,28 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Divider from "@material-ui/core/Divider";
 
-const Forks = props => {
-  const { forks, onForkSel, selectedFork } = props;
+const Valves = props => {
+  const { valves, onValveSel, selectedValve } = props;
 
   var aa = "";
-  if (selectedFork) {
-    aa = selectedFork.forklength;
+  if (selectedValve) {
+    aa = selectedValve.valvetype;
   }
 
   return (
     <React.Fragment>
       <FormControl component="fieldset">
-        <FormLabel component="legend">Forks</FormLabel>
+        <FormLabel component="legend">Valves</FormLabel>
 
-        <RadioGroup
-          aria-label="forks"
-          name="forks"
-          //value={value}
-          //onChange={handleChange}
-          row={true}
-        >
-          {forks.map(fork => (
+        <RadioGroup aria-label="valves" name="valves" row={true}>
+          {valves.map(valve => (
             <FormControlLabel
-              key={fork._id}
-              value={fork.forklength}
+              key={valve._id}
+              value={valve.valvetype}
               control={<Radio color="primary" />}
-              label={fork.forklength}
-              onChange={() => onForkSel(fork)}
-              checked={aa === fork.forklength}
+              label={valve.valvetype}
+              onChange={() => onValveSel(valve)}
+              checked={aa === valve.valvetype}
             />
           ))}
         </RadioGroup>
@@ -46,4 +40,4 @@ const Forks = props => {
   );
 };
 
-export default Forks;
+export default Valves;

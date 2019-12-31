@@ -10,6 +10,12 @@ import FormLabel from "@material-ui/core/FormLabel";
 const MastSizes = props => {
   const { mastsizes, onMastSizeSel, selectedMastSize } = props;
 
+  var aa = "";
+  if (selectedMastSize) {
+    aa = selectedMastSize.length;
+    console.log("AAA");
+  }
+
   return (
     <React.Fragment>
       <FormControl component="fieldset">
@@ -28,6 +34,7 @@ const MastSizes = props => {
               value={mastsize.length}
               control={<Radio color="primary" />}
               label={mastsize.length}
+              checked={aa === mastsize.length}
             />
           ))}
         </RadioGroup>

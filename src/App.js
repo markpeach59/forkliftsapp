@@ -8,14 +8,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 
 import Forklifts from "./components/forklifts";
-import Kbd from "./components/kbd";
+import ForkliftDetail from "./components/forkliftdetail";
 import NotFound from "./components/notFound";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      Your Website {new Date().getFullYear()}
+      Maxim (GB) {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -48,9 +48,15 @@ function App() {
     <React.Fragment>
       <Container component="main">
         <CssBaseline />
+
+        <img src="/img/logo.jpg" />
         <div className={classes.paper}>
           <Switch>
-            <Route path="/kbd" component={Kbd} />
+            <Route
+              exact
+              path="/forkliftdetail/:modelName"
+              component={ForkliftDetail}
+            />
             <Route path="/forklifts" component={Forklifts} />
 
             <Route path="/not-found" component={NotFound} />

@@ -34,6 +34,14 @@ const useStyles = makeStyles(theme => ({
 const EnginesFilter = props => {
   const { engines, onEngineSel, selectedEngine } = props;
 
+  //console.log("AA", selectedEngine.name);
+
+  var aa = "";
+  if (selectedEngine) {
+    aa = selectedEngine.name;
+    //console.log("AA", selectedEngine.name);
+  }
+
   const classes = useStyles();
 
   return (
@@ -48,6 +56,7 @@ const EnginesFilter = props => {
               control={<Radio color="primary" />}
               label={engine.name}
               onChange={() => onEngineSel(engine)}
+              checked={aa === engine.name}
             />
           ))}
         </RadioGroup>
