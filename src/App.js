@@ -49,7 +49,7 @@ function App() {
       <Container component="main">
         <CssBaseline />
 
-        <img src="/img/logo.jpg" />
+        <img src="/img/logo.jpg" alt="" />
         <div className={classes.paper}>
           <Switch>
             <Route

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 import Masts from "./masts";
 import Forks from "./forks";
@@ -9,6 +10,7 @@ import Tyres from "./tyres";
 import Cabins from "./cabins";
 import Valves from "./valves";
 import ResetFilters from "./resetfilters";
+import ForkliftImg from "./forkliftimg";
 
 import { getForkliftDetail } from "../services/forkliftDetailService";
 
@@ -154,69 +156,63 @@ class ForkliftDetail extends Component {
       <React.Fragment>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <h1>{this.state.model}</h1>
-
-            <img src="https://fbtbucket.s3.eu-west-2.amazonaws.com/KB20.jpg" />
-
-            <ul id="forkliftranges">
-              <h2>{this.state.rangeCat}</h2>
-              <img src={this.state.imgName} alt="" />
-              <div></div>
-              <li>
-                {this.state.model} {this.state.rangeCat} {this.state.engType}{" "}
-                forklift
-                <br />
-                {this.state.liftcapacity}Kg
-                <br /> {this.state.engType}
-                <br />
-                {this.state.engine} <br />
-                {this.state.selectedMast
-                  ? this.state.selectedMast.masttype
-                  : null}
-                <br />
-                {this.state.selectedMast
-                  ? "Mast Type - " + this.state.selectedMast
-                  : null}
-                <br />
-                {this.state.selectedMastSize
-                  ? "Mast Size - " + this.state.selectedMastSize.mastlength
-                  : null}
-                <br />
-                {this.state.selectedValve
-                  ? "Valve - " + this.state.selectedValve.valvetype
-                  : null}
-                <br />
-                {this.state.selectedFork
-                  ? "Fork Length - " + this.state.selectedFork.forklength
-                  : null}
-                <br />
-                {this.state.selectedSideShift
-                  ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
-                  : null}
-                <br />
-                {this.state.selectedTyre
-                  ? "Tyre - " + this.state.selectedTyre.tyretype
-                  : null}
-                <br />
-                {this.state.selectedCabin
-                  ? "Cabin - " + this.state.selectedCabin.cabinoption
-                  : null}
-                <br />
-                <br />
-                Price Includes :
-                <br />
-                ISO Safety System
-                <br />
-                Full LED Road Lighting
-                <br />
-                Amber Beacon, Safety Blue Spot
-                <br />
-                Reverse Alarm
-                <br />
-                <br />
-                <strong>Quote Price : £{this.state.totalprice}</strong>
-              </li>
-            </ul>
+            <h2>{this.state.model}</h2>
+            {this.state.imgName && this.state.imgName.length > 0 ? (
+              <ForkliftImg imgName={this.state.imgName} />
+            ) : null}
+            <h2>{this.state.rangeCat}</h2>
+            {this.state.model} {this.state.rangeCat} {this.state.engType}{" "}
+            forklift
+            <br />
+            {this.state.liftcapacity}Kg
+            <br /> {this.state.engType}
+            <br />
+            {this.state.engine} <br />
+            {this.state.selectedMast ? this.state.selectedMast.masttype : null}
+            <br />
+            {this.state.selectedMast
+              ? "Mast Type - " + this.state.selectedMast
+              : null}
+            <br />
+            {this.state.selectedMastSize
+              ? "Mast Size - " + this.state.selectedMastSize.mastlength
+              : null}
+            <br />
+            {this.state.selectedValve
+              ? "Valve - " + this.state.selectedValve.valvetype
+              : null}
+            <br />
+            {this.state.selectedFork
+              ? "Fork Length - " + this.state.selectedFork.forklength
+              : null}
+            <br />
+            {this.state.selectedSideShift
+              ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
+              : null}
+            <br />
+            {this.state.selectedTyre
+              ? "Tyre - " + this.state.selectedTyre.tyretype
+              : null}
+            <br />
+            {this.state.selectedCabin
+              ? "Cabin - " + this.state.selectedCabin.cabinoption
+              : null}
+            <br />
+            <br />
+            <Typography variant="p">
+              Price Includes :
+              <br />
+              ISO Safety System
+              <br />
+              Full LED Road Lighting
+              <br />
+              Amber Beacon, Safety Blue Spot
+              <br />
+              Reverse Alarm
+              <br />
+              <br />
+              <strong>Quote Price : £{this.state.totalprice}</strong>
+            </Typography>
           </Grid>
           <Grid item xs={6}>
             <ResetFilters onResetFilters={this.handleResetFilters} />
