@@ -7,10 +7,19 @@ import Masts from "./masts";
 import Forks from "./forks";
 import SideShifts from "./sideshifts";
 import Tyres from "./tyres";
+import Seats from "./seats";
 import Cabins from "./cabins";
 import Valves from "./valves";
 import ResetFilters from "./resetfilters";
 import ForkliftImg from "./forkliftimg";
+
+import ColdStoreProts from "./coldstoreprot";
+import Heaters from "./heater";
+import Aircons from "./aircon";
+import Reargrabs from "./reargrab";
+
+import Batterys from "./battery";
+import Chargers from "./charger";
 
 import { getForkliftDetail } from "../services/forkliftDetailService";
 
@@ -35,7 +44,16 @@ class ForkliftDetail extends Component {
       forks: forky.forks,
       sideshifts: forky.sideshift,
       tyres: forky.tyres,
+      seats: forky.seat,
+      coldstoreprots: forky.coldstoreprot,
       cabins: forky.cabin,
+
+      reargrabs: forky.reargrab,
+      heaters: forky.heater,
+      aircons: forky.aircon,
+
+      batterys: forky.batteries,
+
       totalprice: forky.basePrice,
       baseprice: forky.basePrice
     });
@@ -51,7 +69,19 @@ class ForkliftDetail extends Component {
       selectedFork: undefined,
       selectedSideShift: undefined,
       selectedTyre: undefined,
+      selectedColdStoreProt: undefined,
+      selectedSeat: undefined,
       selectedCabin: undefined,
+
+      selectedAircon: undefined,
+      selectedHeater: undefined,
+      selectedReargrab: undefined,
+
+      selectedBattery: undefined,
+      selectedCharger: undefined,
+
+      chargers: undefined,
+
       totalprice: this.state.baseprice
     });
   };
@@ -125,6 +155,19 @@ class ForkliftDetail extends Component {
     this.setState({ selectedValve: valve, totalprice: newprice });
   };
 
+  handleReargrabSel = reargrab => {
+    console.log("Current Reargrab Selected", this.state.selectedReargrab);
+
+    console.log("PassedmReargrab", reargrab);
+
+    const oldprice = this.state.selectedReargrab
+      ? this.state.selectedReargrab.price
+      : 0;
+    const newprice = this.state.totalprice + reargrab.price - oldprice;
+
+    this.setState({ selectedReargrab: reargrab, totalprice: newprice });
+  };
+
   handleTyreSel = tyre => {
     console.log("Current Tyre Selected", this.state.selectedTyre);
 
@@ -138,6 +181,55 @@ class ForkliftDetail extends Component {
     this.setState({ selectedTyre: tyre, totalprice: newprice });
   };
 
+  handleBatterySel = battery => {
+    console.log("Current Battery Selected", this.state.selectedBattery);
+
+    console.log("PassedmBattery", battery);
+
+    const oldprice = this.state.selectedBattery
+      ? this.state.selectedBattery.price
+      : 0;
+
+    const oldprice2 = this.state.selectedCharger
+      ? this.state.selectedCharger.price
+      : 0;
+    const newprice =
+      this.state.totalprice + battery.price - oldprice - oldprice2;
+
+    this.setState({
+      selectedBattery: battery,
+      selectedCharger: undefined,
+      chargers: battery.chargers,
+      totalprice: newprice
+    });
+  };
+
+  handleChargerSel = charger => {
+    console.log("Current Charger Selected", this.state.selectedCharger);
+
+    console.log("PassedmCharger", charger);
+
+    const oldprice = this.state.selectedCharger
+      ? this.state.selectedCharger.price
+      : 0;
+    const newprice = this.state.totalprice + charger.price - oldprice;
+
+    this.setState({ selectedCharger: charger, totalprice: newprice });
+  };
+
+  handleSeatSel = seat => {
+    console.log("Current Seat Selected", this.state.selectedSeat);
+
+    console.log("PassedmSeat", seat);
+
+    const oldprice = this.state.selectedSeat
+      ? this.state.selectedSeat.price
+      : 0;
+    const newprice = this.state.totalprice + seat.price - oldprice;
+
+    this.setState({ selectedSeat: seat, totalprice: newprice });
+  };
+
   handleCabinSel = cabin => {
     console.log("Current Cabin Selected", this.state.selectedCabin);
 
@@ -149,6 +241,51 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + cabin.price - oldprice;
 
     this.setState({ selectedCabin: cabin, totalprice: newprice });
+  };
+
+  handleColdStoreProtSel = coldstoreprot => {
+    console.log(
+      "Current ColdStoreProt Selected",
+      this.state.selectedColdStoreProt
+    );
+
+    console.log("PassedmColdStoreProt", coldstoreprot);
+
+    const oldprice = this.state.selectedColdStoreProt
+      ? this.state.selectedColdStoreProt.price
+      : 0;
+    const newprice = this.state.totalprice + coldstoreprot.price - oldprice;
+
+    this.setState({
+      selectedColdStoreProt: coldstoreprot,
+      totalprice: newprice
+    });
+  };
+
+  handleHeaterSel = heater => {
+    console.log("Current Heater Selected", this.state.selectedHeater);
+
+    console.log("PassedmHeater", heater);
+
+    const oldprice = this.state.selectedHeater
+      ? this.state.selectedHeater.price
+      : 0;
+    const newprice = this.state.totalprice + heater.price - oldprice;
+
+    this.setState({ selectedHeater: heater, totalprice: newprice });
+  };
+
+  handleAirconSel = aircon => {
+    console.log("Current Aircon Selected", this.state.selectedAircon);
+
+    console.log("PassedmAircon", aircon);
+
+    const oldprice = this.state.selectedAircon
+      ? this.state.selectedAircon.price
+      : 0;
+    const newprice = this.state.totalprice + aircon.price - oldprice;
+
+    this.setState({ selectedAircon: aircon, totalprice: newprice });
   };
 
   render() {
@@ -190,13 +327,32 @@ class ForkliftDetail extends Component {
               ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
               : null}
             <br />
+            {this.state.selectedColdStoreProt ? "Cold Store Protection" : null}
+            <br />
+            {this.state.selectedReargrab ? "Rear Grab Handle with Horn " : null}
+            <br />
             {this.state.selectedTyre
               ? "Tyre - " + this.state.selectedTyre.tyretype
               : null}
             <br />
+            {this.state.selectedBattery
+              ? "Battery - " + this.state.selectedBattery.batterytype
+              : null}
+            <br />
+            {this.state.selectedCharger
+              ? "Charger - " + this.state.selectedCharger.chargertype
+              : null}
+            <br />
+            {this.state.selectedSeat
+              ? "Seat - " + this.state.selectedSeat.seattype
+              : null}
             {this.state.selectedCabin
               ? "Cabin - " + this.state.selectedCabin.cabinoption
               : null}
+            <br />
+            {this.state.selectedHeater ? "Heater" : null}
+            <br />
+            {this.state.selectedAircon ? "Aircon " : null}
             <br />
             <br />
             <Typography variant="p">
@@ -259,11 +415,68 @@ class ForkliftDetail extends Component {
               />
             ) : null}
 
+            {this.state.coldstoreprots &&
+            this.state.coldstoreprots.length > 0 ? (
+              <ColdStoreProts
+                coldstoreprots={this.state.coldstoreprots}
+                selectedColdStoreProt={this.state.selectedColdStoreProt}
+                onColdStoreProtSel={this.handleColdStoreProtSel}
+              />
+            ) : null}
+
+            {this.state.reargrabs && this.state.reargrabs.length > 0 ? (
+              <Reargrabs
+                reargrabs={this.state.reargrabs}
+                selectedReargrab={this.state.selectedReargrab}
+                onReargrabSel={this.handleReargrabSel}
+              />
+            ) : null}
+
+            {this.state.seats && this.state.seats.length > 0 ? (
+              <Seats
+                seats={this.state.seats}
+                selectedSeat={this.state.selectedSeat}
+                onSeatSel={this.handleSeatSel}
+              />
+            ) : null}
+
+            {this.state.batterys && this.state.batterys.length > 0 ? (
+              <Batterys
+                batterys={this.state.batterys}
+                selectedBattery={this.state.selectedBattery}
+                onBatterySel={this.handleBatterySel}
+              />
+            ) : null}
+
+            {this.state.chargers && this.state.chargers.length > 0 ? (
+              <Chargers
+                chargers={this.state.chargers}
+                selectedCharger={this.state.selectedCharger}
+                onChargerSel={this.handleChargerSel}
+              />
+            ) : null}
+
             {this.state.cabins && this.state.cabins.length > 0 ? (
               <Cabins
                 cabins={this.state.cabins}
                 selectedCabin={this.state.selectedCabin}
                 onCabinSel={this.handleCabinSel}
+              />
+            ) : null}
+
+            {this.state.heaters && this.state.heaters.length > 0 ? (
+              <Heaters
+                heaters={this.state.heaters}
+                selectedHeater={this.state.selectedHeater}
+                onHeaterSel={this.handleHeaterSel}
+              />
+            ) : null}
+
+            {this.state.aircons && this.state.aircons.length > 0 ? (
+              <Aircons
+                aircons={this.state.aircons}
+                selectedAircon={this.state.selectedAircon}
+                onAirconSel={this.handleAirconSel}
               />
             ) : null}
           </Grid>

@@ -108,33 +108,18 @@ class Forklifts extends Component {
       <React.Fragment>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Typography variant="h2">Forklifts</Typography>
-
-            <Typography variant="subtitle1" gutterBottom>
-              {/*There are {count} forklift ranges*/}
-            </Typography>
-            {/*}
-            {this.state.selectedEngine ? (
-              <h1>{this.state.selectedEngine.name}</h1>
-            ) : null}
-            {this.state.selectedCapacityFilter ? (
-              <h1>{this.state.selectedCapacityFilter.capFilter}</h1>
-            ) : null}*/}
-
             {Object.entries(t).map(([key, values]) => (
               <React.Fragment key={key}>
-                <Typography variant="h4">{values.range}</Typography>
+                <Typography variant="h6">{values.range} Range</Typography>
 
-                <ul>
-                  {values.models.map(g => (
-                    <li key={g._id}>
-                      <Link to={{ pathname: "/forkliftdetail/" + g.model }}>
-                        <Button>{g.model}</Button>
-                      </Link>{" "}
-                      {g.capacity} {g.engType}
-                    </li>
-                  ))}
-                </ul>
+                {values.models.map(g => (
+                  <div key={g._id}>
+                    <Link to={{ pathname: "/forkliftdetail/" + g.model }}>
+                      <Button>{g.model}</Button>
+                    </Link>{" "}
+                    {g.capacity} {g.engType}
+                  </div>
+                ))}
               </React.Fragment>
             ))}
           </Grid>
