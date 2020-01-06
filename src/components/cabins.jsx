@@ -33,6 +33,8 @@ const Cabins = props => {
           ))}
         </RadioGroup>
       </FormControl>
+      <Divider />
+      <br />
     </React.Fragment>
   );
 };
