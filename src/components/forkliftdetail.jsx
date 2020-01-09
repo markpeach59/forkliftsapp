@@ -17,6 +17,12 @@ import ColdStoreProts from "./coldstoreprot";
 import Heaters from "./heater";
 import Aircons from "./aircon";
 import Reargrabs from "./reargrab";
+import Sideleverhydraulics from "./sideleverhydraulic";
+
+import Platforms from "./platform";
+import Armguards from "./armguard";
+import Fork2ds from "./fork2d";
+import Bfss from "./bfs";
 
 import Batterys from "./battery";
 import Chargers from "./charger";
@@ -49,11 +55,17 @@ class ForkliftDetail extends Component {
       cabins: forky.cabin,
 
       reargrabs: forky.reargrab,
+      sideleverhydraulics: forky.sideleverhydraulic,
+
+      armguards: forky.armguard,
+      platforms: forky.platform,
+      fork2ds: forky.forks2d,
+
       heaters: forky.heater,
       aircons: forky.aircon,
 
       batterys: forky.batteries,
-
+      bfss: forky.bfs,
       totalprice: forky.basePrice,
       baseprice: forky.basePrice
     });
@@ -76,9 +88,14 @@ class ForkliftDetail extends Component {
       selectedAircon: undefined,
       selectedHeater: undefined,
       selectedReargrab: undefined,
-
+      selectedSideleverhydraulic: undefined,
       selectedBattery: undefined,
       selectedCharger: undefined,
+
+      selectedArmguard: undefined,
+      selectedPlatform: undefined,
+      selectedFork2d: undefined,
+      selectedBfs: undefined,
 
       chargers: undefined,
 
@@ -129,6 +146,19 @@ class ForkliftDetail extends Component {
     this.setState({ selectedFork: fork, totalprice: newprice });
   };
 
+  handleFork2dSel = fork2d => {
+    console.log("Current Fork2d Selected", this.state.selectedFork2d);
+
+    console.log("PassedmFork2d", fork2d);
+
+    const oldprice = this.state.selectedFork2d
+      ? this.state.selectedFork2d.price
+      : 0;
+    const newprice = this.state.totalprice + fork2d.price - oldprice;
+
+    this.setState({ selectedFork2d: fork2d, totalprice: newprice });
+  };
+
   handleSideShiftSel = sideshift => {
     console.log("Current Side Shift Selected", this.state.selectedSideShift);
 
@@ -166,6 +196,63 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + reargrab.price - oldprice;
 
     this.setState({ selectedReargrab: reargrab, totalprice: newprice });
+  };
+
+  handleSideleverhydraulicSel = sideleverhydraulic => {
+    console.log(
+      "Current Sideleverhydralic Selected",
+      this.state.selectedSideleverhydraulic
+    );
+
+    console.log("PassedmSideleverhydraulic", sideleverhydraulic);
+
+    const oldprice = this.state.selectedSideleverhydraulic
+      ? this.state.selectedSideleverhydraulic.price
+      : 0;
+    const newprice =
+      this.state.totalprice + sideleverhydraulic.price - oldprice;
+
+    this.setState({
+      selectedSideleverhydraulic: sideleverhydraulic,
+      totalprice: newprice
+    });
+  };
+
+  handlePlatformSel = platform => {
+    console.log("Current Platform Selected", this.state.selectedPlatform);
+
+    console.log("PassedmPlatform", platform);
+
+    const oldprice = this.state.selectedPlatform
+      ? this.state.selectedPlatform.price
+      : 0;
+    const newprice = this.state.totalprice + platform.price - oldprice;
+
+    this.setState({ selectedPlatform: platform, totalprice: newprice });
+  };
+
+  handleArmguardSel = armguard => {
+    console.log("Current Armguard Selected", this.state.selectedArmguard);
+
+    console.log("PassedmArmguard", armguard);
+
+    const oldprice = this.state.selectedArmguard
+      ? this.state.selectedArmguard.price
+      : 0;
+    const newprice = this.state.totalprice + armguard.price - oldprice;
+
+    this.setState({ selectedArmguard: armguard, totalprice: newprice });
+  };
+
+  handleBfsSel = bfs => {
+    console.log("Current Bfs Selected", this.state.selectedBfs);
+
+    console.log("PassedmBfs", bfs);
+
+    const oldprice = this.state.selectedBfs ? this.state.selectedBfs.price : 0;
+    const newprice = this.state.totalprice + bfs.price - oldprice;
+
+    this.setState({ selectedBfs: bfs, totalprice: newprice });
   };
 
   handleTyreSel = tyre => {
@@ -323,13 +410,25 @@ class ForkliftDetail extends Component {
               ? "Fork Length - " + this.state.selectedFork.forklength
               : null}
             <br />
+            {this.state.selectedFork2d
+              ? "Fork Length - " + this.state.selectedFork2d.forklength
+              : null}
+            <br />
             {this.state.selectedSideShift
               ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
+              : null}
+            <br />
+            {this.state.selectedSideleverhydraulic
+              ? "Side Lever Hydraulics"
               : null}
             <br />
             {this.state.selectedColdStoreProt ? "Cold Store Protection" : null}
             <br />
             {this.state.selectedReargrab ? "Rear Grab Handle with Horn " : null}
+            <br />
+            {this.state.selectedArmguard ? "with Arm Guard" : null}
+            <br />
+            {this.state.selectedPlatform ? "with Platform " : null}
             <br />
             {this.state.selectedTyre
               ? "Tyre - " + this.state.selectedTyre.tyretype
@@ -343,6 +442,8 @@ class ForkliftDetail extends Component {
               ? "Charger - " + this.state.selectedCharger.chargertype
               : null}
             <br />
+            {this.state.selectedBfs ? "with BFS" : null}
+            <br />
             {this.state.selectedSeat
               ? "Seat - " + this.state.selectedSeat.seattype
               : null}
@@ -355,20 +456,18 @@ class ForkliftDetail extends Component {
             {this.state.selectedAircon ? "Aircon " : null}
             <br />
             <br />
-            <Typography variant="p">
-              Price Includes :
-              <br />
-              ISO Safety System
-              <br />
-              Full LED Road Lighting
-              <br />
-              Amber Beacon, Safety Blue Spot
-              <br />
-              Reverse Alarm
-              <br />
-              <br />
-              <strong>Quote Price : £{this.state.totalprice}</strong>
-            </Typography>
+            Price Includes :
+            <br />
+            ISO Safety System
+            <br />
+            Full LED Road Lighting
+            <br />
+            Amber Beacon, Safety Blue Spot
+            <br />
+            Reverse Alarm
+            <br />
+            <br />
+            <strong>Quote Price : £{this.state.totalprice}</strong>
           </Grid>
           <Grid item xs={6}>
             <ResetFilters onResetFilters={this.handleResetFilters} />
@@ -396,6 +495,14 @@ class ForkliftDetail extends Component {
                 forks={this.state.forks}
                 selectedFork={this.state.selectedFork}
                 onForkSel={this.handleForkSel}
+              />
+            ) : null}
+
+            {this.state.fork2ds && this.state.fork2ds.length > 0 ? (
+              <Fork2ds
+                fork2ds={this.state.fork2ds}
+                selectedFork2d={this.state.selectedFork2d}
+                onFork2dSel={this.handleFork2dSel}
               />
             ) : null}
 
@@ -432,6 +539,33 @@ class ForkliftDetail extends Component {
               />
             ) : null}
 
+            {this.state.platforms && this.state.platforms.length > 0 ? (
+              <Platforms
+                platforms={this.state.platforms}
+                selectedPlatform={this.state.selectedPlatform}
+                onPlatformSel={this.handlePlatformSel}
+              />
+            ) : null}
+
+            {this.state.armguards && this.state.armguards.length > 0 ? (
+              <Armguards
+                armguards={this.state.armguards}
+                selectedArmguard={this.state.selectedArmguard}
+                onArmguardSel={this.handleArmguardSel}
+              />
+            ) : null}
+
+            {this.state.sideleverhydraulics &&
+            this.state.sideleverhydraulics.length > 0 ? (
+              <Sideleverhydraulics
+                sideleverhydraulics={this.state.sideleverhydraulics}
+                selectedSideleverhydraulic={
+                  this.state.selectedSideleverhydraulic
+                }
+                onSideleverhydraulicSel={this.handleSideleverhydraulicSel}
+              />
+            ) : null}
+
             {this.state.seats && this.state.seats.length > 0 ? (
               <Seats
                 seats={this.state.seats}
@@ -453,6 +587,14 @@ class ForkliftDetail extends Component {
                 chargers={this.state.chargers}
                 selectedCharger={this.state.selectedCharger}
                 onChargerSel={this.handleChargerSel}
+              />
+            ) : null}
+
+            {this.state.bfss && this.state.bfss.length > 0 ? (
+              <Bfss
+                bfss={this.state.bfss}
+                selectedBfs={this.state.selectedBfs}
+                onBfsSel={this.handleBfsSel}
               />
             ) : null}
 
