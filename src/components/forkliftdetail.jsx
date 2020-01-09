@@ -24,6 +24,9 @@ import Armguards from "./armguard";
 import Fork2ds from "./fork2d";
 import Bfss from "./bfs";
 
+import Loadbackrests from "./loadbackrest";
+import Steerings from "./steering";
+
 import Batterys from "./battery";
 import Chargers from "./charger";
 
@@ -58,7 +61,9 @@ class ForkliftDetail extends Component {
       sideleverhydraulics: forky.sideleverhydraulic,
 
       armguards: forky.armguard,
-      platforms: forky.platform,
+
+      steerings: forky.steering,
+      loadbackrests: forky.loadbackrest,
       fork2ds: forky.forks2d,
 
       heaters: forky.heater,
@@ -94,6 +99,10 @@ class ForkliftDetail extends Component {
 
       selectedArmguard: undefined,
       selectedPlatform: undefined,
+
+      selectedLoadbackrest: undefined,
+      selectedSteering: undefined,
+
       selectedFork2d: undefined,
       selectedBfs: undefined,
 
@@ -253,6 +262,35 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + bfs.price - oldprice;
 
     this.setState({ selectedBfs: bfs, totalprice: newprice });
+  };
+
+  handleLoadbackrestSel = loadbackrest => {
+    console.log(
+      "Current Loadbackrest Selected",
+      this.state.selectedLoadbackrest
+    );
+
+    console.log("PassedmLoadbackrest", loadbackrest);
+
+    const oldprice = this.state.selectedLoadbackrest
+      ? this.state.selectedLoadbackrest.price
+      : 0;
+    const newprice = this.state.totalprice + loadbackrest.price - oldprice;
+
+    this.setState({ selectedLoadbackrest: loadbackrest, totalprice: newprice });
+  };
+
+  handleSteeringSel = steering => {
+    console.log("Current Steering Selected", this.state.selectedSteering);
+
+    console.log("PassedmSteering", steering);
+
+    const oldprice = this.state.selectedSteering
+      ? this.state.selectedSteering.price
+      : 0;
+    const newprice = this.state.totalprice + steering.price - oldprice;
+
+    this.setState({ selectedSteering: steering, totalprice: newprice });
   };
 
   handleTyreSel = tyre => {
@@ -430,6 +468,8 @@ class ForkliftDetail extends Component {
             <br />
             {this.state.selectedPlatform ? "with Platform " : null}
             <br />
+            {this.state.selectedSteering ? "Electronic Steering " : null}
+            <br />
             {this.state.selectedTyre
               ? "Tyre - " + this.state.selectedTyre.tyretype
               : null}
@@ -443,6 +483,8 @@ class ForkliftDetail extends Component {
               : null}
             <br />
             {this.state.selectedBfs ? "with BFS" : null}
+            <br />
+            {this.state.selectedLoadbackrest ? "with Load Backrest " : null}
             <br />
             {this.state.selectedSeat
               ? "Seat - " + this.state.selectedSeat.seattype
@@ -563,6 +605,22 @@ class ForkliftDetail extends Component {
                   this.state.selectedSideleverhydraulic
                 }
                 onSideleverhydraulicSel={this.handleSideleverhydraulicSel}
+              />
+            ) : null}
+
+            {this.state.steerings && this.state.steerings.length > 0 ? (
+              <Steerings
+                steerings={this.state.steerings}
+                selectedSteering={this.state.selectedSteering}
+                onSteeringSel={this.handleSteeringSel}
+              />
+            ) : null}
+
+            {this.state.loadbackrests && this.state.loadbackrests.length > 0 ? (
+              <Loadbackrests
+                loadbackrests={this.state.loadbackrests}
+                selectedLoadbackrest={this.state.selectedLoadbackrest}
+                onLoadbackrestSel={this.handleLoadbackrestSel}
               />
             ) : null}
 
