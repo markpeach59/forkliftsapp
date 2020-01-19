@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 import Masts from "./masts";
 import Forks from "./forks";
@@ -29,8 +28,10 @@ import Steerings from "./steering";
 
 import Batterys from "./battery";
 import Chargers from "./charger";
+import QuoteSave from "./quotesave";
 
 import { getForkliftDetail } from "../services/forkliftDetailService";
+import { savequote } from "../services/quotesService";
 
 import "typeface-roboto";
 
@@ -77,7 +78,7 @@ class ForkliftDetail extends Component {
   }
 
   handleResetFilters = () => {
-    console.log("Been Reset");
+    //console.log("Been Reset");
 
     this.setState({
       selectedMast: undefined,
@@ -112,24 +113,26 @@ class ForkliftDetail extends Component {
     });
   };
 
+  handleQuoteSave = async () => {
+    const quote = {};
+
+    quote.model = this.state.model;
+    quote.price = this.state.totalprice;
+
+    console.log("Quote Save Clicked", quote);
+
+    try {
+      const { data: savedquote } = await savequote(quote.model, quote.price);
+    } catch (error) {
+      console.log("did not save quote");
+    }
+  };
+
   handleMastSel = mast => {
-    console.log("Current Mast Selected", this.state.selectedMast);
-
-    console.log("Passedmask", mast);
-
-    console.log("Mast Selected ", mast);
-
     this.setState({ selectedMast: mast });
   };
 
   handleMastSizeSel = (mastsize, masttype) => {
-    console.log("Current Mast Size Selected", this.state.selectedMastSize);
-
-    console.log("Passedmask", mastsize);
-
-    console.log("Mast Selected ", mastsize);
-    console.log("Mast Type Selected ", masttype);
-
     const oldprice = this.state.selectedMastSize
       ? this.state.selectedMastSize.price
       : 0;
@@ -143,10 +146,6 @@ class ForkliftDetail extends Component {
   };
 
   handleForkSel = fork => {
-    console.log("Current Fork Selected", this.state.selectedFork);
-
-    console.log("PassedmFork", fork);
-
     const oldprice = this.state.selectedFork
       ? this.state.selectedFork.price
       : 0;
@@ -156,10 +155,6 @@ class ForkliftDetail extends Component {
   };
 
   handleFork2dSel = fork2d => {
-    console.log("Current Fork2d Selected", this.state.selectedFork2d);
-
-    console.log("PassedmFork2d", fork2d);
-
     const oldprice = this.state.selectedFork2d
       ? this.state.selectedFork2d.price
       : 0;
@@ -169,10 +164,6 @@ class ForkliftDetail extends Component {
   };
 
   handleSideShiftSel = sideshift => {
-    console.log("Current Side Shift Selected", this.state.selectedSideShift);
-
-    console.log("Side Shift Selected ", sideshift);
-
     const oldprice = this.state.selectedSideShift
       ? this.state.selectedSideShift.price
       : 0;
@@ -182,10 +173,6 @@ class ForkliftDetail extends Component {
   };
 
   handleValveSel = valve => {
-    console.log("Current Valve Selected", this.state.selectedValve);
-
-    console.log("PassedmValve", valve);
-
     const oldprice = this.state.selectedValve
       ? this.state.selectedValve.price
       : 0;
@@ -195,10 +182,6 @@ class ForkliftDetail extends Component {
   };
 
   handleReargrabSel = reargrab => {
-    console.log("Current Reargrab Selected", this.state.selectedReargrab);
-
-    console.log("PassedmReargrab", reargrab);
-
     const oldprice = this.state.selectedReargrab
       ? this.state.selectedReargrab.price
       : 0;
@@ -208,13 +191,6 @@ class ForkliftDetail extends Component {
   };
 
   handleSideleverhydraulicSel = sideleverhydraulic => {
-    console.log(
-      "Current Sideleverhydralic Selected",
-      this.state.selectedSideleverhydraulic
-    );
-
-    console.log("PassedmSideleverhydraulic", sideleverhydraulic);
-
     const oldprice = this.state.selectedSideleverhydraulic
       ? this.state.selectedSideleverhydraulic.price
       : 0;
@@ -228,10 +204,6 @@ class ForkliftDetail extends Component {
   };
 
   handlePlatformSel = platform => {
-    console.log("Current Platform Selected", this.state.selectedPlatform);
-
-    console.log("PassedmPlatform", platform);
-
     const oldprice = this.state.selectedPlatform
       ? this.state.selectedPlatform.price
       : 0;
@@ -241,10 +213,6 @@ class ForkliftDetail extends Component {
   };
 
   handleArmguardSel = armguard => {
-    console.log("Current Armguard Selected", this.state.selectedArmguard);
-
-    console.log("PassedmArmguard", armguard);
-
     const oldprice = this.state.selectedArmguard
       ? this.state.selectedArmguard.price
       : 0;
@@ -254,10 +222,6 @@ class ForkliftDetail extends Component {
   };
 
   handleBfsSel = bfs => {
-    console.log("Current Bfs Selected", this.state.selectedBfs);
-
-    console.log("PassedmBfs", bfs);
-
     const oldprice = this.state.selectedBfs ? this.state.selectedBfs.price : 0;
     const newprice = this.state.totalprice + bfs.price - oldprice;
 
@@ -265,13 +229,6 @@ class ForkliftDetail extends Component {
   };
 
   handleLoadbackrestSel = loadbackrest => {
-    console.log(
-      "Current Loadbackrest Selected",
-      this.state.selectedLoadbackrest
-    );
-
-    console.log("PassedmLoadbackrest", loadbackrest);
-
     const oldprice = this.state.selectedLoadbackrest
       ? this.state.selectedLoadbackrest.price
       : 0;
@@ -281,10 +238,6 @@ class ForkliftDetail extends Component {
   };
 
   handleSteeringSel = steering => {
-    console.log("Current Steering Selected", this.state.selectedSteering);
-
-    console.log("PassedmSteering", steering);
-
     const oldprice = this.state.selectedSteering
       ? this.state.selectedSteering.price
       : 0;
@@ -294,10 +247,6 @@ class ForkliftDetail extends Component {
   };
 
   handleTyreSel = tyre => {
-    console.log("Current Tyre Selected", this.state.selectedTyre);
-
-    console.log("PassedmTyre", tyre);
-
     const oldprice = this.state.selectedTyre
       ? this.state.selectedTyre.price
       : 0;
@@ -307,10 +256,6 @@ class ForkliftDetail extends Component {
   };
 
   handleBatterySel = battery => {
-    console.log("Current Battery Selected", this.state.selectedBattery);
-
-    console.log("PassedmBattery", battery);
-
     const oldprice = this.state.selectedBattery
       ? this.state.selectedBattery.price
       : 0;
@@ -330,10 +275,6 @@ class ForkliftDetail extends Component {
   };
 
   handleChargerSel = charger => {
-    console.log("Current Charger Selected", this.state.selectedCharger);
-
-    console.log("PassedmCharger", charger);
-
     const oldprice = this.state.selectedCharger
       ? this.state.selectedCharger.price
       : 0;
@@ -343,10 +284,6 @@ class ForkliftDetail extends Component {
   };
 
   handleSeatSel = seat => {
-    console.log("Current Seat Selected", this.state.selectedSeat);
-
-    console.log("PassedmSeat", seat);
-
     const oldprice = this.state.selectedSeat
       ? this.state.selectedSeat.price
       : 0;
@@ -356,10 +293,6 @@ class ForkliftDetail extends Component {
   };
 
   handleCabinSel = cabin => {
-    console.log("Current Cabin Selected", this.state.selectedCabin);
-
-    console.log("PassedmCabin", cabin);
-
     const oldprice = this.state.selectedCabin
       ? this.state.selectedCabin.price
       : 0;
@@ -369,13 +302,6 @@ class ForkliftDetail extends Component {
   };
 
   handleColdStoreProtSel = coldstoreprot => {
-    console.log(
-      "Current ColdStoreProt Selected",
-      this.state.selectedColdStoreProt
-    );
-
-    console.log("PassedmColdStoreProt", coldstoreprot);
-
     const oldprice = this.state.selectedColdStoreProt
       ? this.state.selectedColdStoreProt.price
       : 0;
@@ -388,10 +314,6 @@ class ForkliftDetail extends Component {
   };
 
   handleHeaterSel = heater => {
-    console.log("Current Heater Selected", this.state.selectedHeater);
-
-    console.log("PassedmHeater", heater);
-
     const oldprice = this.state.selectedHeater
       ? this.state.selectedHeater.price
       : 0;
@@ -401,10 +323,6 @@ class ForkliftDetail extends Component {
   };
 
   handleAirconSel = aircon => {
-    console.log("Current Aircon Selected", this.state.selectedAircon);
-
-    console.log("PassedmAircon", aircon);
-
     const oldprice = this.state.selectedAircon
       ? this.state.selectedAircon.price
       : 0;
@@ -510,6 +428,7 @@ class ForkliftDetail extends Component {
             <br />
             <br />
             <strong>Quote Price : £{this.state.totalprice}</strong>
+            <QuoteSave onQuoteSave={this.handleQuoteSave} />
           </Grid>
           <Grid item xs={6}>
             <ResetFilters onResetFilters={this.handleResetFilters} />

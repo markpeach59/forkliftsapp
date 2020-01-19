@@ -4,7 +4,7 @@ import { Route, Redirect, Switch, Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
@@ -18,6 +18,10 @@ import NotFound from "./components/notFound";
 
 import LoginForm from "./components/loginform";
 import Logout from "./components/logout";
+
+import Quotes from "./components/quotes";
+
+import QuoteDetail from "./components/quotedetail";
 
 function Copyright() {
   return (
@@ -61,6 +65,9 @@ class App extends Component {
                   <Button color="inherit">Login</Button>
                 </Link>
               )}
+              <Link to={{ pathname: "/quotes" }}>
+                <Button color="inherit">Quotes</Button>
+              </Link>
             </ToolBar>
           </AppBar>
           <img src="/img/logo.jpg" alt="" />
@@ -74,7 +81,8 @@ class App extends Component {
                 component={ForkliftDetail}
               />
               <Route path="/forklifts" component={Forklifts} />
-
+              <Route exact path="/quotes/:_id" component={QuoteDetail} />
+              <Route path="/quotes" component={Quotes} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
               <Redirect to="/not-found" />
