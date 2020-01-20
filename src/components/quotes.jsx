@@ -1,10 +1,9 @@
+import _ from "lodash";
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { getQuotes, getQuoteDetail } from "../services/quotesService";
-
-import Typography from "@material-ui/core/Typography";
+import { getQuotes } from "../services/quotesService";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -37,13 +36,14 @@ class Quotes extends Component {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <h2>List of Quotes</h2>
-            {Object.entries(t).map(([key, values]) => (
-              <React.Fragment key={key}>
-                <Typography variant="h6">{values.model}</Typography>
-
-                <div key={values._id}>
-                  <Link to={{ pathname: "/quotes/" + values._id }}>
-                    <Button>{values.model}</Button>
+            {t.map(x => (
+              <React.Fragment key={x._id}>
+                <div key={x._id}>
+                  <Link to={{ pathname: "/quotes/" + x._id }}>
+                    <Button>
+                      {_.slice(x.createdAt, 0, 10)}{" "}
+                      {_.slice(x.createdAt, 11, 19)} {x.model}
+                    </Button>
                   </Link>
                 </div>
               </React.Fragment>
