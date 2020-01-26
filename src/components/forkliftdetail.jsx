@@ -21,7 +21,10 @@ import Sideleverhydraulics from "./sideleverhydraulic";
 import Platforms from "./platform";
 import Armguards from "./armguard";
 import Fork2ds from "./fork2d";
-import Bfss from "./bfs";
+import Bfs from "./bfs";
+
+import Trolley from "./trolley";
+import Blinkey from "./blinkey";
 
 import Loadbackrests from "./loadbackrest";
 import Steerings from "./steering";
@@ -72,6 +75,9 @@ class ForkliftDetail extends Component {
 
       batterys: forky.batteries,
       bfss: forky.bfs,
+      trolleys: forky.trolley,
+      blinkeys: forky.blinkey,
+
       totalprice: forky.basePrice,
       baseprice: forky.basePrice
     });
@@ -106,6 +112,10 @@ class ForkliftDetail extends Component {
 
       selectedFork2d: undefined,
       selectedBfs: undefined,
+      selectedTrolley: undefined,
+      selectedBlinkey: undefined,
+
+      selectedSideextractionbattery: undefined,
 
       totalprice: this.state.baseprice
     });
@@ -263,6 +273,24 @@ class ForkliftDetail extends Component {
     this.setState({ selectedBfs: bfs, totalprice: newprice });
   };
 
+  handleTrolleySel = trolley => {
+    const oldprice = this.state.selectedTrolley
+      ? this.state.selectedTrolley.price
+      : 0;
+    const newprice = this.state.totalprice + trolley.price - oldprice;
+
+    this.setState({ selectedTrolley: trolley, totalprice: newprice });
+  };
+
+  handleBlinkeySel = blinkey => {
+    const oldprice = this.state.selectedBlinkey
+      ? this.state.selectedBlinkey.price
+      : 0;
+    const newprice = this.state.totalprice + blinkey.price - oldprice;
+
+    this.setState({ selectedBlinkey: blinkey, totalprice: newprice });
+  };
+
   handleLoadbackrestSel = loadbackrest => {
     const oldprice = this.state.selectedLoadbackrest
       ? this.state.selectedLoadbackrest.price
@@ -406,7 +434,11 @@ class ForkliftDetail extends Component {
               )}
             >
               {this.state.selectedMastSize
-                ? "Mast Size " + this.state.selectedMastSize.mastlength
+                ? "Mast Size " +
+                  this.state.selectedMastSize.mastlength +
+                  "mm, " +
+                  this.state.selectedMastSize.closedheight +
+                  "mm"
                 : null}
             </ConditionalWrapper>
             <ConditionalWrapper
@@ -582,6 +614,28 @@ class ForkliftDetail extends Component {
               )}
             >
               {this.state.selectedBfs ? "with BFS" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedTrolley}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedTrolley ? "with Trolley" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedBlinkey}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedBlinkey ? "with Blinkey" : null}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedLoadbackrest}
@@ -796,10 +850,26 @@ class ForkliftDetail extends Component {
             ) : null}
 
             {this.state.bfss && this.state.bfss.length > 0 ? (
-              <Bfss
+              <Bfs
                 bfss={this.state.bfss}
                 selectedBfs={this.state.selectedBfs}
                 onBfsSel={this.handleBfsSel}
+              />
+            ) : null}
+
+            {this.state.trolleys && this.state.trolleys.length > 0 ? (
+              <Trolley
+                trolleys={this.state.trolleys}
+                selectedTrolley={this.state.selectedTrolley}
+                onTrolleySel={this.handleTrolleySel}
+              />
+            ) : null}
+
+            {this.state.blinkeys && this.state.blinkeys.length > 0 ? (
+              <Blinkey
+                blinkeys={this.state.blinkeys}
+                selectedBlinkey={this.state.selectedBlinkey}
+                onBlinkeySel={this.handleBlinkeySel}
               />
             ) : null}
 

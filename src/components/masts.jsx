@@ -36,7 +36,9 @@ const Masts = props => {
                   key={mastsize._id}
                   value={mastsize.mastlength}
                   control={<Radio color="primary" />}
-                  label={mastsize.mastlength}
+                  label={
+                    mastsize.mastlength + "mm,  " + mastsize.closedheight + "mm"
+                  }
                   onChange={() => onMastSizeSel(mastsize, mast.masttype)}
                   checked={aa === mast.masttype + " " + mastsize.mastlength}
                 />
