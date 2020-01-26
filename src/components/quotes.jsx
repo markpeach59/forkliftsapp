@@ -45,6 +45,8 @@ class Quotes extends Component {
                       {_.slice(x.createdAt, 11, 19)} {x.model}
                     </Button>
                   </Link>
+                  {" £"}
+                  {x.price}
                 </div>
               </React.Fragment>
             ))}

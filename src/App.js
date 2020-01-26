@@ -16,6 +16,9 @@ import Forklifts from "./components/forklifts";
 import ForkliftDetail from "./components/forkliftdetail";
 import NotFound from "./components/notFound";
 
+import RegistrationForm from "./components/registrationform";
+import DealerRegistrationForm from "./components/dealerregistrationform";
+
 import LoginForm from "./components/loginform";
 import Logout from "./components/logout";
 
@@ -73,6 +76,11 @@ class App extends Component {
           <img src="/img/logo.jpg" alt="" />
           <div>
             <Switch>
+              <Route path="/register" component={RegistrationForm} />
+              <Route
+                path="/registerdealer"
+                component={DealerRegistrationForm}
+              />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
               <Route

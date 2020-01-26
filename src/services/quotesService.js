@@ -7,8 +7,10 @@ export function getQuotes() {
   return http.get(apiEndPoint);
 }
 
-export function savequote(model, price) {
-  return http.post(apiEndPoint, { model, price });
+export function savequote(quote) {
+  console.log("quote items ", quote);
+
+  return http.post(apiEndPoint, quote);
 }
 
 export function getQuoteDetail(id) {

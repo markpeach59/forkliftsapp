@@ -107,8 +107,6 @@ class ForkliftDetail extends Component {
       selectedFork2d: undefined,
       selectedBfs: undefined,
 
-      chargers: undefined,
-
       totalprice: this.state.baseprice
     });
   };
@@ -119,10 +117,47 @@ class ForkliftDetail extends Component {
     quote.model = this.state.model;
     quote.price = this.state.totalprice;
 
-    console.log("Quote Save Clicked", quote);
+    if (this.state.selectedMast) quote.masttype = this.state.selectedMast;
 
+    if (this.state.selectedMastSize)
+      quote.mastsize = this.state.selectedMastSize.mastlength;
+
+    if (this.state.selectedValve)
+      quote.valve = this.state.selectedValve.valvetype;
+    if (this.state.selectedFork)
+      quote.forks = this.state.selectedFork.forklength;
+    if (this.state.selectedSideShift)
+      quote.sideshift = this.state.selectedSideShift.sideshifttype;
+    if (this.state.selectedTyre) quote.tyre = this.state.selectedTyre.tyretype;
+    if (this.state.selectedColdStoreProt) quote.coldstoreprot = true;
+    if (this.state.selectedSeat) quote.seat = this.state.selectedSeat.seattype;
+    if (this.state.selectedCabin)
+      quote.cabin = this.state.selectedCabin.cabinoption;
+
+    if (this.state.selectedAircon) quote.aircon = true;
+    if (this.state.selectedHeater) quote.heater = true;
+    if (this.state.selectedReargrab) quote.reargrab = true;
+    if (this.state.selectedSideleverhydraulic) quote.slideleverhydraulic = true;
+    if (this.state.selectedBattery)
+      quote.battery = this.state.selectedBattery.batterytype;
+    if (this.state.selectedCharger)
+      quote.charger = this.state.selectedCharger.chargertype;
+
+    if (this.state.selectedArmguard) quote.armguard = true;
+    if (this.state.selectedPlatform) quote.platform = true;
+
+    if (this.state.selectedLoadbackrest) quote.loadbackrest = true;
+    if (this.state.selectedSteering) quote.steering = true;
+
+    if (this.state.selectedFork2d)
+      quote.fork2d = this.state.selectedFork2d.forklength;
+    if (this.state.selectedBfs) quote.bfs = true;
+
+    console.log("Quote", quote);
     try {
-      const { data: savedquote } = await savequote(quote.model, quote.price);
+      const x = await savequote(quote);
+      console.log("quote wa s", x);
+      //window.location = "/quotes";
     } catch (error) {
       console.log("did not save quote");
     }
@@ -332,6 +367,8 @@ class ForkliftDetail extends Component {
   };
 
   render() {
+    const ConditionalWrapper = ({ condition, wrapper, children }) =>
+      condition ? wrapper(children) : null;
     return (
       <React.Fragment>
         <Grid container spacing={2}>
@@ -348,72 +385,263 @@ class ForkliftDetail extends Component {
             <br /> {this.state.engType}
             <br />
             {this.state.engine} <br />
-            {this.state.selectedMast ? this.state.selectedMast.masttype : null}
-            <br />
-            {this.state.selectedMast
-              ? "Mast Type - " + this.state.selectedMast
-              : null}
-            <br />
-            {this.state.selectedMastSize
-              ? "Mast Size - " + this.state.selectedMastSize.mastlength
-              : null}
-            <br />
-            {this.state.selectedValve
-              ? "Valve - " + this.state.selectedValve.valvetype
-              : null}
-            <br />
-            {this.state.selectedFork
-              ? "Fork Length - " + this.state.selectedFork.forklength
-              : null}
-            <br />
-            {this.state.selectedFork2d
-              ? "Fork Length - " + this.state.selectedFork2d.forklength
-              : null}
-            <br />
-            {this.state.selectedSideShift
-              ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
-              : null}
-            <br />
-            {this.state.selectedSideleverhydraulic
-              ? "Side Lever Hydraulics"
-              : null}
-            <br />
-            {this.state.selectedColdStoreProt ? "Cold Store Protection" : null}
-            <br />
-            {this.state.selectedReargrab ? "Rear Grab Handle with Horn " : null}
-            <br />
-            {this.state.selectedArmguard ? "with Arm Guard" : null}
-            <br />
-            {this.state.selectedPlatform ? "with Platform " : null}
-            <br />
-            {this.state.selectedSteering ? "Electronic Steering " : null}
-            <br />
-            {this.state.selectedTyre
-              ? "Tyre - " + this.state.selectedTyre.tyretype
-              : null}
-            <br />
-            {this.state.selectedBattery
-              ? "Battery - " + this.state.selectedBattery.batterytype
-              : null}
-            <br />
-            {this.state.selectedCharger
-              ? "Charger - " + this.state.selectedCharger.chargertype
-              : null}
-            <br />
-            {this.state.selectedBfs ? "with BFS" : null}
-            <br />
-            {this.state.selectedLoadbackrest ? "with Load Backrest " : null}
-            <br />
-            {this.state.selectedSeat
-              ? "Seat - " + this.state.selectedSeat.seattype
-              : null}
-            {this.state.selectedCabin
-              ? "Cabin - " + this.state.selectedCabin.cabinoption
-              : null}
-            <br />
-            {this.state.selectedHeater ? "Heater" : null}
-            <br />
-            {this.state.selectedAircon ? "Aircon " : null}
+            <ConditionalWrapper
+              condition={this.state.selectedMast}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              Mast Type - {this.state.selectedMast}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedMastSize}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedMastSize
+                ? "Mast Size " + this.state.selectedMastSize.mastlength
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedValve}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedValve
+                ? "Valve - " + this.state.selectedValve.valvetype
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedFork}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedFork
+                ? "Fork Length - " + this.state.selectedFork.forklength
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedFork2d}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedFork2d
+                ? "Fork Length - " + this.state.selectedFork2d.forklength
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedSideShift}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedSideShift
+                ? "Side Shift - " + this.state.selectedSideShift.sideshifttype
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedSideleverhydraulic}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              Side Lever Hydraulics
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedColdStoreProt}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedColdStoreProt
+                ? "Cold Store Protection"
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedReargrab}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedReargrab
+                ? "Rear Grab Handle with Horn "
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedArmguard}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedArmguard ? "with Arm Guard" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedPlatform}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedPlatform ? "with Platform " : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedSteering}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedSteering ? "Electronic Steering " : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedTyre}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedTyre
+                ? "Tyre - " + this.state.selectedTyre.tyretype
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedBattery}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedBattery
+                ? "Battery - " + this.state.selectedBattery.batterytype
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedCharger}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedCharger
+                ? "Charger - " +
+                  this.state.selectedCharger.chargertype +
+                  "<br />"
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedBfs}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedBfs ? "with BFS" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedLoadbackrest}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedLoadbackrest ? "with Load Backrest" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedSeat}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedSeat
+                ? "Seat - " + this.state.selectedSeat.seattype
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedCabin}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedCabin
+                ? "Cabin - " + this.state.selectedCabin.cabinoption
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedHeater}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedHeater ? "Heater" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedAircon}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedAircon ? "Aircon " : null}
+            </ConditionalWrapper>
             <br />
             <br />
             Price Includes :
