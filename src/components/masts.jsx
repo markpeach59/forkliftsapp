@@ -31,18 +31,32 @@ const Masts = props => {
             <FormLabel component="legend">{mast.masttype}</FormLabel>
 
             <RadioGroup aria-label="mastsize" name="mastsize" row={false}>
-              {mast.mastsizes.map(mastsize => (
-                <FormControlLabel
-                  key={mastsize._id}
-                  value={mastsize.mastlength}
-                  control={<Radio color="primary" />}
-                  label={
-                    mastsize.mastlength + "mm,  " + mastsize.closedheight + "mm"
-                  }
-                  onChange={() => onMastSizeSel(mastsize, mast.masttype)}
-                  checked={aa === mast.masttype + " " + mastsize.mastlength}
-                />
-              ))}
+              {mast.mastsizes.map(mastsize => {
+                return mastsize.closedheight ? (
+                  <FormControlLabel
+                    key={mastsize._id}
+                    value={mastsize.mastlength}
+                    control={<Radio color="primary" />}
+                    label={
+                      mastsize.mastlength +
+                      "mm,  " +
+                      mastsize.closedheight +
+                      "mm"
+                    }
+                    onChange={() => onMastSizeSel(mastsize, mast.masttype)}
+                    checked={aa === mast.masttype + " " + mastsize.mastlength}
+                  />
+                ) : (
+                  <FormControlLabel
+                    key={mastsize._id}
+                    value={mastsize.mastlength}
+                    control={<Radio color="primary" />}
+                    label={mastsize.mastlength + "mm"}
+                    onChange={() => onMastSizeSel(mastsize, mast.masttype)}
+                    checked={aa === mast.masttype + " " + mastsize.mastlength}
+                  />
+                );
+              })}
             </RadioGroup>
           </FormControl>
         </div>

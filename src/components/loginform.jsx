@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-import { login } from "../services/authService";
+import auth from "../services/authService";
 
 import "typeface-roboto";
 
@@ -21,12 +21,10 @@ class LoginForm extends Component {
 
   doSubmit = async () => {
     try {
-      const { data: jwt } = await login(
-        this.emailInput.value,
-        this.passwordInput.value
-      );
-      localStorage.setItem("token", jwt);
-      window.location = "/";
+      await auth.login(this.emailInput.value, this.passwordInput.value);
+      const { state } = this.props.location;
+
+      window.location = state ? state.from.pathname : "/";
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const email = { ...this.state.email };

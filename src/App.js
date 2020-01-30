@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch, Link } from "react-router-dom";
-
-import jwtDecode from "jwt-decode";
+import ProtectedRoute from "./components/protectedroute";
+import ProtectedAdminRoute from "./components/protectedadminroute";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -21,6 +21,7 @@ import DealerRegistrationForm from "./components/dealerregistrationform";
 
 import LoginForm from "./components/loginform";
 import Logout from "./components/logout";
+import auth from "./services/authService";
 
 import Quotes from "./components/quotes";
 
@@ -40,11 +41,8 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (error) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {
@@ -71,26 +69,42 @@ class App extends Component {
               <Link to={{ pathname: "/quotes" }}>
                 <Button color="inherit">Quotes</Button>
               </Link>
+
+              {this.state.user && this.state.user.isAdmin && (
+                <Link to={{ pathname: "/register" }}>
+                  <Button color="inherit">Register User</Button>
+                </Link>
+              )}
+
+              {this.state.user && this.state.user.isAdmin && (
+                <Link to={{ pathname: "/registerdealer" }}>
+                  <Button color="inherit">Register Dealer</Button>
+                </Link>
+              )}
             </ToolBar>
           </AppBar>
           <img src="/img/logo.jpg" alt="" />
           <div>
             <Switch>
-              <Route path="/register" component={RegistrationForm} />
-              <Route
+              <ProtectedRoute path="/register" component={RegistrationForm} />
+              <ProtectedAdminRoute
                 path="/registerdealer"
                 component={DealerRegistrationForm}
               />
               <Route path="/login" component={LoginForm} />
               <Route path="/logout" component={Logout} />
-              <Route
+              <ProtectedRoute
                 exact
                 path="/forkliftdetail/:modelName"
                 component={ForkliftDetail}
               />
-              <Route path="/forklifts" component={Forklifts} />
-              <Route exact path="/quotes/:_id" component={QuoteDetail} />
-              <Route path="/quotes" component={Quotes} />
+              <ProtectedRoute path="/forklifts" component={Forklifts} />
+              <ProtectedRoute
+                exact
+                path="/quotes/:_id"
+                component={QuoteDetail}
+              />
+              <ProtectedRoute path="/quotes" component={Quotes} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
               <Redirect to="/not-found" />

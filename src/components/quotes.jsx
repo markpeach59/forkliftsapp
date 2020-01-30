@@ -8,6 +8,14 @@ import { getQuotes } from "../services/quotesService";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+
+import TableBody from "@material-ui/core/TableBody";
+
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+
 import "typeface-roboto";
 
 class Quotes extends Component {
@@ -36,20 +44,28 @@ class Quotes extends Component {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <h2>List of Quotes</h2>
-            {t.map(x => (
-              <React.Fragment key={x._id}>
-                <div key={x._id}>
-                  <Link to={{ pathname: "/quotes/" + x._id }}>
-                    <Button>
-                      {_.slice(x.createdAt, 0, 10)}{" "}
-                      {_.slice(x.createdAt, 11, 19)} {x.model}
-                    </Button>
-                  </Link>
-                  {" £"}
-                  {x.price}
-                </div>
-              </React.Fragment>
-            ))}
+
+            <Table>
+              <TableBody>
+                {t.map(x => (
+                  <TableRow key={x._id}>
+                    <TableCell>
+                      <Link to={{ pathname: "/quotes/" + x._id }}>
+                        <Button>
+                          {_.slice(x.createdAt, 0, 10)}{" "}
+                          {_.slice(x.createdAt, 11, 19)}
+                        </Button>
+                      </Link>
+                    </TableCell>
+                    <TableCell> {x.model}</TableCell>
+                    <TableCell>
+                      {" £"}
+                      {x.price}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </Grid>
         </Grid>
       </React.Fragment>
