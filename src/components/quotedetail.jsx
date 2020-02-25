@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Grid from "@material-ui/core/Grid";
 
+import ForkliftImg from "./forkliftimg";
 import { getQuoteDetail } from "../services/quotesService";
 
 import "typeface-roboto";
@@ -13,12 +14,13 @@ class QuoteDetail extends Component {
     const handle = this.props.match.params._id;
     //console.log("Params", handle);
     const { data: forky } = await getQuoteDetail(handle);
-    //console.log("Detail", forky);
+    console.log("Detail", forky);
 
     this.setState({
       model: forky.model,
 
       price: forky.price,
+      imgName: forky.imgname,
       masttype: forky.masttype,
       mastsize: forky.mastsize,
 
@@ -46,7 +48,11 @@ class QuoteDetail extends Component {
       steering: forky.steering,
 
       fork2d: forky.fork2d,
-      bfs: forky.bfs
+      bfs: forky.bfs,
+
+      trolley: forky.manualtrolley,
+      blinkey: forky.blinkey,
+      sideextractionbattery: forky.sideextractionbattery
     });
   }
 
@@ -56,9 +62,9 @@ class QuoteDetail extends Component {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <h2>{this.state.model}</h2>
-            {this.state.masttype
-              ? "Mast Type : " + this.state.masttype
-              : null}{" "}
+            {this.state.imgName && this.state.imgName.length > 0 ? (
+              <ForkliftImg imgName={this.state.imgName} />
+            ) : null}
             <br />
             {this.state.mastsize
               ? "Mast Height : " + this.state.mastsize
@@ -71,6 +77,8 @@ class QuoteDetail extends Component {
             {this.state.sideshift
               ? "Side Shift : " + this.state.sideshift
               : null}
+            <br />
+            {this.state.sideleverhydraulic ? "Side Lever Hydraulics" : null}
             <br />
             {this.state.coldstoreprot ? "Cold Store Protection" : null}
             <br />
@@ -89,6 +97,14 @@ class QuoteDetail extends Component {
             {this.state.charger ? "Charger : " + this.state.charger : null}
             <br />
             {this.state.bfs ? "BFS" : null}
+            <br />
+            {this.state.trolley ? "Trolley" : null}
+            <br />
+            {this.state.blinkey ? "Blinkey" : null}
+            <br />
+            {this.state.sideextractionbattery
+              ? "Side Extraction Battery"
+              : null}
             <br />
             {this.state.armguard ? "Armguard" : null}
             <br />

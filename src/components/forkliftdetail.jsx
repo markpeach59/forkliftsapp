@@ -25,6 +25,7 @@ import Bfs from "./bfs";
 
 import Trolley from "./trolley";
 import Blinkey from "./blinkey";
+import Sideextractionbatterys from "./sideextractionbattery";
 
 import Loadbackrests from "./loadbackrest";
 import Steerings from "./steering";
@@ -77,6 +78,7 @@ class ForkliftDetail extends Component {
       bfss: forky.bfs,
       trolleys: forky.trolley,
       blinkeys: forky.blinkey,
+      sideextractionbatterys: forky.sideextractionbattery,
 
       totalprice: forky.basePrice,
       baseprice: forky.basePrice
@@ -127,6 +129,8 @@ class ForkliftDetail extends Component {
     quote.model = this.state.model;
     quote.price = this.state.totalprice;
 
+    if (this.state.imgName) quote.imgname = this.state.imgName;
+
     if (this.state.selectedMast) quote.masttype = this.state.selectedMast;
 
     if (this.state.selectedMastSize)
@@ -147,11 +151,17 @@ class ForkliftDetail extends Component {
     if (this.state.selectedAircon) quote.aircon = true;
     if (this.state.selectedHeater) quote.heater = true;
     if (this.state.selectedReargrab) quote.reargrab = true;
-    if (this.state.selectedSideleverhydraulic) quote.slideleverhydraulic = true;
+    if (this.state.selectedSideleverhydraulic) quote.sideleverhydraulic = true;
     if (this.state.selectedBattery)
       quote.battery = this.state.selectedBattery.batterytype;
     if (this.state.selectedCharger)
       quote.charger = this.state.selectedCharger.chargertype;
+
+    if (this.state.selectedSideextractionbattery)
+      quote.sideextractionbattery = true;
+
+    if (this.state.selectedBlinkey) quote.blinkey = true;
+    if (this.state.selectedTrolley) quote.manualtrolley = true;
 
     if (this.state.selectedArmguard) quote.armguard = true;
     if (this.state.selectedPlatform) quote.platform = true;
@@ -161,12 +171,13 @@ class ForkliftDetail extends Component {
 
     if (this.state.selectedFork2d)
       quote.fork2d = this.state.selectedFork2d.forklength;
+
     if (this.state.selectedBfs) quote.bfs = true;
 
     console.log("Quote", quote);
     try {
       const x = await savequote(quote);
-      console.log("quote wa s", x);
+      console.log("quote was", x);
       //window.location = "/quotes";
     } catch (error) {
       console.log("did not save quote");
@@ -346,6 +357,19 @@ class ForkliftDetail extends Component {
     this.setState({ selectedCharger: charger, totalprice: newprice });
   };
 
+  handleSideextractionbatterySel = sideextractionbattery => {
+    const oldprice = this.state.selectedSideextractionbattery
+      ? this.state.selectedSideextractionbattery.price
+      : 0;
+    const newprice =
+      this.state.totalprice + sideextractionbattery.price - oldprice;
+
+    this.setState({
+      selectedSideextractionbattery: sideextractionbattery,
+      totalprice: newprice
+    });
+  };
+
   handleSeatSel = seat => {
     const oldprice = this.state.selectedSeat
       ? this.state.selectedSeat.price
@@ -400,7 +424,7 @@ class ForkliftDetail extends Component {
     return (
       <React.Fragment>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <h2>{this.state.model}</h2>
             {this.state.imgName && this.state.imgName.length > 0 ? (
               <ForkliftImg imgName={this.state.imgName} />
@@ -599,9 +623,7 @@ class ForkliftDetail extends Component {
               )}
             >
               {this.state.selectedCharger
-                ? "Charger - " +
-                  this.state.selectedCharger.chargertype +
-                  "<br />"
+                ? "Charger - " + this.state.selectedCharger.chargertype
                 : null}
             </ConditionalWrapper>
             <ConditionalWrapper
@@ -636,6 +658,19 @@ class ForkliftDetail extends Component {
               )}
             >
               {this.state.selectedBlinkey ? "with Blinkey" : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.selectedSideextractionbattery}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedSideextractionbattery
+                ? "with Side Extraction Battery"
+                : null}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedLoadbackrest}
@@ -712,7 +747,7 @@ class ForkliftDetail extends Component {
             <strong>Quote Price : £{this.state.totalprice}</strong>
             <QuoteSave onQuoteSave={this.handleQuoteSave} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <ResetFilters onResetFilters={this.handleResetFilters} />
 
             {this.state.masts && this.state.masts.length > 0 ? (
@@ -870,6 +905,17 @@ class ForkliftDetail extends Component {
                 blinkeys={this.state.blinkeys}
                 selectedBlinkey={this.state.selectedBlinkey}
                 onBlinkeySel={this.handleBlinkeySel}
+              />
+            ) : null}
+
+            {this.state.sideextractionbatterys &&
+            this.state.sideextractionbatterys.length > 0 ? (
+              <Sideextractionbatterys
+                sideextractionbatterys={this.state.sideextractionbatterys}
+                selectedSideextractionbattery={
+                  this.state.selectedSideextractionbattery
+                }
+                onSideextractionbatterySel={this.handleSideextractionbatterySel}
               />
             ) : null}
 
