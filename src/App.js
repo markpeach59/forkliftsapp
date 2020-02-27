@@ -27,6 +27,8 @@ import Quotes from "./components/quotes";
 
 import QuoteDetail from "./components/quotedetail";
 
+import DealerHeader from "./components/dealerheader";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -43,6 +45,8 @@ class App extends Component {
   componentDidMount() {
     const user = auth.getCurrentUser();
     this.setState({ user });
+
+    /* if logged in get dealer details */
   }
 
   render() {
@@ -83,7 +87,9 @@ class App extends Component {
               )}
             </ToolBar>
           </AppBar>
-          <img src="/img/logo.jpg" alt="" />
+
+          <DealerHeader />
+
           <div>
             <Switch>
               <ProtectedRoute path="/register" component={RegistrationForm} />

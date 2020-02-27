@@ -10,3 +10,8 @@ export function getDealers() {
 export function registerDealer(dealername, dealermarkup) {
   return http.post(apiEndPoint, { dealername, dealermarkup });
 }
+
+export function getDealerDetail(id) {
+  const apiEndPoint = config.apiURL + "/dealers/" + id;
+  return http.get(apiEndPoint);
+}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import auth from "../services/authService";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -43,6 +44,9 @@ class ForkliftDetail extends Component {
   state = {};
 
   async componentDidMount() {
+    const user = auth.getCurrentUser();
+    this.setState({ user });
+
     const handle = this.props.match.params.modelName;
     //console.log("Params", handle);
     const { data: forky } = await getForkliftDetail(handle);
@@ -126,6 +130,7 @@ class ForkliftDetail extends Component {
   handleQuoteSave = async () => {
     const quote = {};
 
+    quote.userid = this.state.user._id;
     quote.model = this.state.model;
     quote.price = this.state.totalprice;
 
@@ -174,11 +179,12 @@ class ForkliftDetail extends Component {
 
     if (this.state.selectedBfs) quote.bfs = true;
 
-    console.log("Quote", quote);
+    //console.log("Quote", quote);
     try {
-      const x = await savequote(quote);
-      console.log("quote was", x);
-      //window.location = "/quotes";
+      //const x = await savequote(quote);
+      await savequote(quote);
+      //console.log("quote was", x);
+      window.location = "/quotes";
     } catch (error) {
       console.log("did not save quote");
     }

@@ -14,7 +14,7 @@ class QuoteDetail extends Component {
     const handle = this.props.match.params._id;
     //console.log("Params", handle);
     const { data: forky } = await getQuoteDetail(handle);
-    console.log("Detail", forky);
+    //console.log("Detail", forky);
 
     this.setState({
       model: forky.model,
