@@ -27,6 +27,9 @@ import Quotes from "./components/quotes";
 
 import QuoteDetail from "./components/quotedetail";
 
+import Orders from "./components/orders";
+import OrderDetail from "./components/orderdetail";
+
 import DealerHeader from "./components/dealerheader";
 
 function Copyright() {
@@ -58,20 +61,15 @@ class App extends Component {
             <ToolBar>
               {this.state.user ? "Hello " + this.state.user.fullname : null}
               <Link to={{ pathname: "/" }}>
-                <Button color="inherit">Home</Button>
+                <Button color="inherit">Forklifts</Button>
               </Link>
-              {this.state.user && (
-                <Link to={{ pathname: "/logout" }}>
-                  <Button color="inherit">Logout</Button>
-                </Link>
-              )}
-              {!this.state.user && (
-                <Link to={{ pathname: "/login" }}>
-                  <Button color="inherit">Login</Button>
-                </Link>
-              )}
+
               <Link to={{ pathname: "/quotes" }}>
                 <Button color="inherit">Quotes</Button>
+              </Link>
+
+              <Link to={{ pathname: "/orders" }}>
+                <Button color="inherit">Orders</Button>
               </Link>
 
               {this.state.user && this.state.user.isAdmin && (
@@ -83,6 +81,17 @@ class App extends Component {
               {this.state.user && this.state.user.isAdmin && (
                 <Link to={{ pathname: "/registerdealer" }}>
                   <Button color="inherit">Register Dealer</Button>
+                </Link>
+              )}
+
+              {this.state.user && (
+                <Link to={{ pathname: "/logout" }}>
+                  <Button color="inherit">Logout</Button>
+                </Link>
+              )}
+              {!this.state.user && (
+                <Link to={{ pathname: "/login" }}>
+                  <Button color="inherit">Login</Button>
                 </Link>
               )}
             </ToolBar>
@@ -111,6 +120,12 @@ class App extends Component {
                 component={QuoteDetail}
               />
               <ProtectedRoute path="/quotes" component={Quotes} />
+              <ProtectedRoute
+                exact
+                path="/orders/:_id"
+                component={OrderDetail}
+              />
+              <ProtectedRoute path="/orders" component={Orders} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
               <Redirect to="/not-found" />

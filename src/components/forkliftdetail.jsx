@@ -182,9 +182,9 @@ class ForkliftDetail extends Component {
     //console.log("Quote", quote);
     try {
       //const x = await savequote(quote);
-      await savequote(quote);
-      //console.log("quote was", x);
-      window.location = "/quotes";
+      const x = await savequote(quote);
+      //console.log("quote was", x.data._id);
+      window.location = "/quotes/" + x.data._id;
     } catch (error) {
       console.log("did not save quote");
     }

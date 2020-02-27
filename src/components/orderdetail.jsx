@@ -3,22 +3,17 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 
 import ForkliftImg from "./forkliftimg";
-import {
-  getQuoteDetail,
-  createOrderFromQuote
-} from "../services/quotesService";
-
-import OrderCreate from "./ordercreate";
+import { getOrderDetail } from "../services/ordersService";
 
 import "typeface-roboto";
 
-class QuoteDetail extends Component {
+class OrderDetail extends Component {
   state = {};
 
   async componentDidMount() {
     const handle = this.props.match.params._id;
     //console.log("Params", handle);
-    const { data: forky } = await getQuoteDetail(handle);
+    const { data: forky } = await getOrderDetail(handle);
     //console.log("Detail", forky);
 
     this.setState({
@@ -60,22 +55,6 @@ class QuoteDetail extends Component {
       sideextractionbattery: forky.sideextractionbattery
     });
   }
-
-  handleCreateOrder = async () => {
-    // _id of Quote Object
-    const handle = this.props.match.params._id;
-
-    //console.log("Order Id", handle);
-
-    try {
-      await createOrderFromQuote(handle);
-
-      // go to specific order page
-      window.location = "/orders/" + handle;
-    } catch (error) {
-      console.log("did not create order", handle);
-    }
-  };
 
   render() {
     return (
@@ -148,8 +127,7 @@ class QuoteDetail extends Component {
             Reverse Alarm
             <br />
             <br />
-            <strong>Quote Price : £{this.state.price}</strong>
-            <OrderCreate onOrderCreate={this.handleCreateOrder} />
+            <strong>Quote Price was: £{this.state.price}</strong>
           </Grid>
         </Grid>
       </React.Fragment>
@@ -157,4 +135,4 @@ class QuoteDetail extends Component {
   }
 }
 
-export default QuoteDetail;
+export default OrderDetail;

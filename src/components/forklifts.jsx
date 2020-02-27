@@ -19,7 +19,8 @@ import "typeface-roboto";
 
 class Forklifts extends Component {
   state = {
-    forklifts: []
+    forklifts: [],
+    loading: true
   };
 
   async componentDidMount() {
@@ -28,12 +29,13 @@ class Forklifts extends Component {
     this.setState({
       forklifts,
       engTypesFilter: getEngTypes(),
-      capacityFilter: getCapacityFilters()
+      capacityFilter: getCapacityFilters(),
+      loading: false
     });
   }
 
   handleResetFilters = () => {
-    console.log("Been Reset");
+    //console.log("Been Reset");
 
     this.setState({
       selectedEngine: undefined,
@@ -46,7 +48,7 @@ class Forklifts extends Component {
   };
 
   handleEngineSel = engine => {
-    console.log("ZZ", engine.name);
+    //console.log("ZZ", engine.name);
     this.setState({ selectedEngine: engine });
     //console.log("ZZZ", this.state.selectedEngine.name);
   };
@@ -101,6 +103,9 @@ class Forklifts extends Component {
     Object.entries(this.state.forklifts).map(([key, values]) =>
       values.models.map(v => console.log(v.modelName, v.engType, v.capacity))
     );*/
+
+    // until we get data from the REST API - we in Loading State
+    if (this.state.loading === true) return <p> Loading ...</p>;
 
     if (count === 0) return <p>There are no forklifts in the database</p>;
 

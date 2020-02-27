@@ -16,3 +16,7 @@ export function savequote(quote) {
 export function getQuoteDetail(id) {
   return http.get(apiEndPoint + "/" + id);
 }
+
+export function createOrderFromQuote(id) {
+  return http.patch(apiEndPoint + "/" + id);
+}
