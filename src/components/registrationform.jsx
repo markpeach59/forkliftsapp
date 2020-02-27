@@ -24,7 +24,7 @@ class RegisterForm extends Component {
     try {
       const { data } = await registerUser(
         this.nameInput.value,
-        this.emailInput.value,
+        this.emailInput.value.toLowerCase(),
         this.passwordInput.value
       );
       console.log("registered as ", data);

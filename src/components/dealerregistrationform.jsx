@@ -21,10 +21,7 @@ class RegisterDealerForm extends Component {
 
   doSubmit = async () => {
     try {
-      const { data } = await registerDealer(
-        this.dealernameInput.value,
-        this.dealermarkupInput.value
-      );
+      const { data } = await registerDealer(this.dealernameInput.value);
       console.log("registered as ", data);
     } catch (error) {
       if (error.response) {
@@ -52,15 +49,6 @@ class RegisterDealerForm extends Component {
             inputRef={input => (this.dealernameInput = input)}
             error={this.state.dealername.error}
             helperText={this.state.dealername.helperText}
-          />
-          <TextField
-            label="Enter Markup"
-            fullWidth
-            autoFocus
-            required
-            inputRef={input => (this.dealermarkupInput = input)}
-            error={this.state.dealermarkup.error}
-            helperText={this.state.dealermarkup.helperText}
           />
 
           <Button type="submit" color="primary">
