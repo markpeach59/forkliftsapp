@@ -47,7 +47,7 @@ const CapacityFilter = props => {
   return (
     <React.Fragment>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Load Capacity</FormLabel>
+        <FormLabel component="legend">Max Load Capacity</FormLabel>
 
         <RadioGroup
           aria-label="loadcapcity"
