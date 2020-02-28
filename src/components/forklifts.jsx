@@ -60,9 +60,16 @@ class Forklifts extends Component {
       ? models.filter(m => m.engType === this.state.selectedEngine.name)
       : models;
 
+    var catchment = 600;
+    if (this.state.selectedCapacityFilter)
+      if (this.state.selectedCapacityFilter.capFilter === 2000) catchment = 300;
+
     const mscap = this.state.selectedCapacityFilter
       ? mseng.filter(
-          m => m.capacity === this.state.selectedCapacityFilter.capFilter
+          //m => m.capacity === this.state.selectedCapacityFilter.capFilter
+          m =>
+            m.capacity <= this.state.selectedCapacityFilter.capFilter &&
+            m.capacity > this.state.selectedCapacityFilter.capFilter - catchment
         )
       : mseng;
 
