@@ -17,7 +17,7 @@ class DealerHeader extends Component {
       if (dealery.dealerlogo) headerlogo = dealery.dealerlogo;
     }
 
-    this.setState({ user, headerlogo });
+    this.setState({ headerlogo });
   }
 
   render() {
