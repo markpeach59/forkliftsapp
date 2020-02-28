@@ -4,33 +4,30 @@ import { getDealerDetail } from "../services/dealerService";
 import "typeface-roboto";
 
 class DealerHeader extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = { headerlogo: "/img/logo.jpg" };
+  }
 
   async componentDidMount() {
     const user = auth.getCurrentUser();
-    var headerlogo = "/img/logo.jpg";
 
     if (user && user.dealerId) {
       const { data: dealery } = await getDealerDetail(user.dealerId);
 
       //console.log("Dealer ", dealery);
-      if (dealery.dealerlogo) headerlogo = dealery.dealerlogo;
+      if (dealery.dealerlogo) {
+        const headerlogo = dealery.dealerlogo;
+        this.setState({ headerlogo });
+      }
     }
-
-    this.setState({ headerlogo });
   }
 
   render() {
     return (
       <React.Fragment>
         <React.Fragment>
-          {this.state.headerlogo && (
-            <img
-              src={this.state.headerlogo}
-              alt=""
-              style={{ paddingTop: 60 }}
-            />
-          )}
+          <img src={this.state.headerlogo} alt="" style={{ paddingTop: 60 }} />
         </React.Fragment>
       </React.Fragment>
     );
