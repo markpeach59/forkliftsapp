@@ -30,6 +30,7 @@ import QuoteDetail from "./components/quotedetail";
 import Orders from "./components/orders";
 import OrderDetail from "./components/orderdetail";
 
+import AllOrders from "./components/allorders";
 import DealerHeader from "./components/dealerheader";
 
 function Copyright() {
@@ -57,45 +58,53 @@ class App extends Component {
       <React.Fragment>
         <Container component="main">
           <CssBaseline />
-          <AppBar>
-            <ToolBar>
-              {this.state.user ? "Hello " + this.state.user.fullname : null}
-              <Link to={{ pathname: "/" }}>
-                <Button color="inherit">Forklifts</Button>
-              </Link>
-
-              <Link to={{ pathname: "/quotes" }}>
-                <Button color="inherit">Quotes</Button>
-              </Link>
-
-              <Link to={{ pathname: "/orders" }}>
-                <Button color="inherit">Orders</Button>
-              </Link>
-
-              {this.state.user && this.state.user.isAdmin && (
-                <Link to={{ pathname: "/register" }}>
-                  <Button color="inherit">Register User</Button>
+          {this.state.user && (
+            <AppBar>
+              <ToolBar>
+                {this.state.user ? "Hello " + this.state.user.fullname : null}
+                <Link to={{ pathname: "/" }}>
+                  <Button color="inherit">Forklifts</Button>
                 </Link>
-              )}
 
-              {this.state.user && this.state.user.isAdmin && (
-                <Link to={{ pathname: "/registerdealer" }}>
-                  <Button color="inherit">Register Dealer</Button>
+                <Link to={{ pathname: "/quotes" }}>
+                  <Button color="inherit">Quotes</Button>
                 </Link>
-              )}
 
-              {this.state.user && (
-                <Link to={{ pathname: "/logout" }}>
-                  <Button color="inherit">Logout</Button>
+                <Link to={{ pathname: "/orders" }}>
+                  <Button color="inherit">Orders</Button>
                 </Link>
-              )}
-              {!this.state.user && (
-                <Link to={{ pathname: "/login" }}>
-                  <Button color="inherit">Login</Button>
-                </Link>
-              )}
-            </ToolBar>
-          </AppBar>
+
+                {this.state.user && this.state.user.isAdmin && (
+                  <Link to={{ pathname: "/allorders" }}>
+                    <Button color="inherit">All Orders</Button>
+                  </Link>
+                )}
+
+                {this.state.user && this.state.user.isAdmin && (
+                  <Link to={{ pathname: "/register" }}>
+                    <Button color="inherit">Register User</Button>
+                  </Link>
+                )}
+
+                {this.state.user && this.state.user.isAdmin && (
+                  <Link to={{ pathname: "/registerdealer" }}>
+                    <Button color="inherit">Register Dealer</Button>
+                  </Link>
+                )}
+
+                {this.state.user && (
+                  <Link to={{ pathname: "/logout" }}>
+                    <Button color="inherit">Logout</Button>
+                  </Link>
+                )}
+                {!this.state.user && (
+                  <Link to={{ pathname: "/login" }}>
+                    <Button color="inherit">Login</Button>
+                  </Link>
+                )}
+              </ToolBar>
+            </AppBar>
+          )}
 
           <DealerHeader />
 
@@ -126,6 +135,7 @@ class App extends Component {
                 component={OrderDetail}
               />
               <ProtectedRoute path="/orders" component={Orders} />
+              <ProtectedRoute path="/allorders" component={AllOrders} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
               <Redirect to="/not-found" />

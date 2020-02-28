@@ -23,15 +23,9 @@ class DealerHeader extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.user && (
-          <React.Fragment>
-            <img
-              src={this.state.headerlogo}
-              alt=""
-              style={{ paddingTop: 60 }}
-            />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          <img src={this.state.headerlogo} alt="" style={{ paddingTop: 60 }} />
+        </React.Fragment>
       </React.Fragment>
     );
   }
