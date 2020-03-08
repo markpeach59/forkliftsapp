@@ -78,6 +78,8 @@ class QuoteDetail extends Component {
   };
 
   render() {
+    const ConditionalWrapper = ({ condition, wrapper, children }) =>
+      condition ? wrapper(children) : null;
     return (
       <React.Fragment>
         <Grid container spacing={2}>
@@ -91,51 +93,237 @@ class QuoteDetail extends Component {
               ? "Mast Height : " + this.state.mastsize
               : null}
             <br />
-            {this.state.forks ? "Forks : " + this.state.forks : null}
-            <br />
-            {this.state.fork2d ? "Forks : " + this.state.fork2d : null}
-            <br />
-            {this.state.sideshift
-              ? "Side Shift : " + this.state.sideshift
-              : null}
-            <br />
-            {this.state.sideleverhydraulic ? "Side Lever Hydraulics" : null}
-            <br />
-            {this.state.coldstoreprot ? "Cold Store Protection" : null}
-            <br />
-            {this.state.seat ? "Seat : " + this.state.seat : null}
-            <br />
-            {this.state.seat ? "Tyres : " + this.state.tyre : null}
-            <br />
-            {this.state.aircon ? "Air Con" : null}
-            <br />
-            {this.state.heater ? "Heater" : null}
-            <br />
-            {this.state.reargrab ? "Rear Grab Handle" : null}
-            <br />
-            {this.state.battery ? "Battery : " + this.state.battery : null}
-            <br />
-            {this.state.charger ? "Charger : " + this.state.charger : null}
-            <br />
-            {this.state.bfs ? "BFS" : null}
-            <br />
-            {this.state.trolley ? "Trolley" : null}
-            <br />
-            {this.state.blinkey ? "Blinkey" : null}
-            <br />
-            {this.state.sideextractionbattery
-              ? "Side Extraction Battery"
-              : null}
-            <br />
-            {this.state.armguard ? "Armguard" : null}
-            <br />
-            {this.state.platform ? "Platform" : null}
-            <br />
-            {this.state.loadbackrest ? "Load Back Rest" : null}
-            <br />
-            {this.state.steering ? "Electric Steering" : null}
-            <br />
-            {this.state.cabin ? "Cabin : " + this.state.cabin : null}
+            <ConditionalWrapper
+              condition={this.state.forks}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Fork Length - " + this.state.forks}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.fork2d}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Fork Size - " + this.state.fork2d}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.sideshift}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Side Shift - " + this.state.sideshift}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.sideleverhydraulic}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Side Lever Hydraulic"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.coldstoreprot}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Cold Store Protection"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.seat}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Seat Type - " + this.state.seat}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.tyre}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Tyre Type - " + this.state.tyre}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.aircon}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Air Con"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.heater}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Heater"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.reargrab}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Rear Grab Handle"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.battery}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Battery - " + this.state.battery}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.charger}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Charger - " + this.state.charger}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.bfs}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"BFS"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.trolley}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Trolley"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.blinkey}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Blinkey"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.sideextractionbattery}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Side Extraction Battery"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.armguard}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Arm Guard"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.platform}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Platform"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.loadbackrest}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Load Back Rest"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.steering}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Electric Steering"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.cabin}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Cabin Type " + this.state.cabin}
+            </ConditionalWrapper>
             <br />
             Price Includes :
             <br />
