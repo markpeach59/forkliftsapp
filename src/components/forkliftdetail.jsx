@@ -134,6 +134,10 @@ class ForkliftDetail extends Component {
     quote.model = this.state.model;
     quote.price = this.state.totalprice;
 
+    quote.capacity = this.state.liftcapacity;
+    quote.engtype = this.state.engType;
+    quote.baseprice = this.state.basePrice;
+
     if (this.state.imgName) quote.imgname = this.state.imgName;
 
     if (this.state.selectedMast) quote.masttype = this.state.selectedMast;

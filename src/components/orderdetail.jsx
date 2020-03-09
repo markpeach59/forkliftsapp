@@ -20,6 +20,9 @@ class OrderDetail extends Component {
       model: forky.model,
 
       price: forky.price,
+
+      capacity: forky.capacity,
+      engtype: forky.engtype,
       imgName: forky.imgname,
       masttype: forky.masttype,
       mastsize: forky.mastsize,
@@ -67,6 +70,29 @@ class OrderDetail extends Component {
             {this.state.imgName && this.state.imgName.length > 0 ? (
               <ForkliftImg imgName={this.state.imgName} />
             ) : null}
+            <br />
+            <ConditionalWrapper
+              condition={this.state.capacity}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Lift Capacity " + this.state.capacity + "Kg"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.engtype}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.engtype}
+            </ConditionalWrapper>
             <br />
             {this.state.mastsize
               ? "Mast Height : " + this.state.mastsize
