@@ -68,7 +68,7 @@ class ForkliftDetail extends Component {
 
       reargrabs: forky.reargrab,
       sideleverhydraulics: forky.sideleverhydraulic,
-
+      platforms: forky.platform,
       armguards: forky.armguard,
 
       steerings: forky.steering,
