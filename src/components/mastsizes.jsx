@@ -13,7 +13,7 @@ const MastSizes = props => {
   var aa = "";
   if (selectedMastSize) {
     aa = selectedMastSize.length;
-    console.log("AAA");
+    //console.log("AXA");
   }
 
   return (

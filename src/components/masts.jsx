@@ -21,7 +21,7 @@ const Masts = props => {
   var aa = "";
   if (selectedMastSize) {
     aa = selectedMast + " " + selectedMastSize.mastlength;
-    console.log("AAA", aa);
+    //console.log("AYA", aa);
   }
 
   return (

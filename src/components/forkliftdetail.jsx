@@ -209,6 +209,8 @@ class ForkliftDetail extends Component {
       selectedMast: masttype,
       totalprice: newprice
     });
+
+    //console.log("VVV", mastsize);
   };
 
   handleForkSel = fork => {
@@ -431,6 +433,8 @@ class ForkliftDetail extends Component {
   render() {
     const ConditionalWrapper = ({ condition, wrapper, children }) =>
       condition ? wrapper(children) : null;
+
+    //console.log("CC", this.state.selectedMastSize);
     return (
       <React.Fragment>
         <Grid container spacing={2}>
@@ -456,7 +460,7 @@ class ForkliftDetail extends Component {
                 </React.Fragment>
               )}
             >
-              Mast Type - {this.state.selectedMast}
+              {"Mast Type - " + this.state.selectedMast}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedMastSize}
@@ -468,11 +472,12 @@ class ForkliftDetail extends Component {
               )}
             >
               {this.state.selectedMastSize
-                ? "Mast Size " +
-                  this.state.selectedMastSize.mastlength +
-                  "mm, " +
-                  this.state.selectedMastSize.closedheight +
-                  "mm"
+                ? "Mast Size " + this.state.selectedMastSize.mastlength + "mm"
+                : null}
+
+              {this.state.selectedMastSize &&
+              this.state.selectedMastSize.closedheight
+                ? " , " + this.state.selectedMastSize.closedheight + "mm"
                 : null}
             </ConditionalWrapper>
             <ConditionalWrapper
