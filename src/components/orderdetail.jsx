@@ -95,6 +95,17 @@ class OrderDetail extends Component {
               {"Fork Size - " + this.state.fork2d}
             </ConditionalWrapper>
             <ConditionalWrapper
+              condition={this.state.valve}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.valve + " Valve"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
               condition={this.state.sideshift}
               wrapper={children => (
                 <React.Fragment>
@@ -126,17 +137,6 @@ class OrderDetail extends Component {
               )}
             >
               {"Cold Store Protection"}
-            </ConditionalWrapper>
-            <ConditionalWrapper
-              condition={this.state.seat}
-              wrapper={children => (
-                <React.Fragment>
-                  {children}
-                  <br />
-                </React.Fragment>
-              )}
-            >
-              {"Seat Type - " + this.state.seat}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.tyre}
@@ -291,6 +291,17 @@ class OrderDetail extends Component {
               )}
             >
               {"Electric Steering"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.seat}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Seat Type - " + this.state.seat}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.cabin}

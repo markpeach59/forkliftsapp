@@ -143,6 +143,7 @@ class ForkliftDetail extends Component {
 
     if (this.state.selectedValve)
       quote.valve = this.state.selectedValve.valvetype;
+
     if (this.state.selectedFork)
       quote.forks = this.state.selectedFork.forklength;
     if (this.state.selectedSideShift)
@@ -181,9 +182,8 @@ class ForkliftDetail extends Component {
 
     //console.log("Quote", quote);
     try {
-      //const x = await savequote(quote);
       const x = await savequote(quote);
-      //console.log("quote was", x.data._id);
+      //console.log("quote was", x);
       window.location = "/quotes/" + x.data._id;
     } catch (error) {
       console.log("did not save quote");

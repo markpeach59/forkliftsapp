@@ -89,10 +89,28 @@ class QuoteDetail extends Component {
               <ForkliftImg imgName={this.state.imgName} />
             ) : null}
             <br />
-            {this.state.mastsize
-              ? "Mast Height : " + this.state.mastsize
-              : null}
-            <br />
+            <ConditionalWrapper
+              condition={this.state.masttype}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Mast Type - " + this.state.masttype}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.mastsize}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Mast Height : " + this.state.mastsize}
+            </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.forks}
               wrapper={children => (
@@ -103,6 +121,17 @@ class QuoteDetail extends Component {
               )}
             >
               {"Fork Length - " + this.state.forks}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.valve}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.valve + " Valve"}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.fork2d}
@@ -147,17 +176,6 @@ class QuoteDetail extends Component {
               )}
             >
               {"Cold Store Protection"}
-            </ConditionalWrapper>
-            <ConditionalWrapper
-              condition={this.state.seat}
-              wrapper={children => (
-                <React.Fragment>
-                  {children}
-                  <br />
-                </React.Fragment>
-              )}
-            >
-              {"Seat Type - " + this.state.seat}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.tyre}
@@ -312,6 +330,17 @@ class QuoteDetail extends Component {
               )}
             >
               {"Electric Steering"}
+            </ConditionalWrapper>
+            <ConditionalWrapper
+              condition={this.state.seat}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Seat Type - " + this.state.seat}
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.cabin}
