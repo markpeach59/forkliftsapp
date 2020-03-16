@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Masts from "./masts";
 import Forks from "./forks";
 import SideShifts from "./sideshifts";
+import Forkpositioners from "./forkpositioner";
 import Tyres from "./tyres";
 import Seats from "./seats";
 import Cabins from "./cabins";
@@ -62,6 +63,7 @@ class ForkliftDetail extends Component {
       valves: forky.valves,
       forks: forky.forks,
       sideshifts: forky.sideshift,
+      forkpositioners: forky.forkpositioner,
       tyres: forky.tyres,
       seats: forky.seat,
       coldstoreprots: forky.coldstoreprot,
@@ -99,6 +101,8 @@ class ForkliftDetail extends Component {
       selectedValve: undefined,
       selectedFork: undefined,
       selectedSideShift: undefined,
+      selectedForkpositioner: undefined,
+
       selectedTyre: undefined,
       selectedColdStoreProt: undefined,
       selectedSeat: undefined,
@@ -154,6 +158,9 @@ class ForkliftDetail extends Component {
       quote.forks = this.state.selectedFork.forklength;
     if (this.state.selectedSideShift)
       quote.sideshift = this.state.selectedSideShift.sideshifttype;
+
+    if (this.state.selectedForkpositioner) quote.forkpositioner = true;
+
     if (this.state.selectedTyre) quote.tyre = this.state.selectedTyre.tyretype;
     if (this.state.selectedColdStoreProt) quote.coldstoreprot = true;
     if (this.state.selectedSeat) quote.seat = this.state.selectedSeat.seattype;
@@ -240,6 +247,18 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + sideshift.price - oldprice;
 
     this.setState({ selectedSideShift: sideshift, totalprice: newprice });
+  };
+
+  handleForkpositionerSel = forkpositioner => {
+    const oldprice = this.state.selectedForkpositioner
+      ? this.state.selectedForkpositioner.price
+      : 0;
+    const newprice = this.state.totalprice + forkpositioner.price - oldprice;
+
+    this.setState({
+      selectedForkpositioner: forkpositioner,
+      totalprice: newprice
+    });
   };
 
   handleValveSel = valve => {
@@ -536,6 +555,19 @@ class ForkliftDetail extends Component {
                 : null}
             </ConditionalWrapper>
             <ConditionalWrapper
+              condition={this.state.selectedForkpositioner}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedForkpositioner
+                ? "Sideshifting Fork Positioner "
+                : null}
+            </ConditionalWrapper>
+            <ConditionalWrapper
               condition={this.state.selectedSideleverhydraulic}
               wrapper={children => (
                 <React.Fragment>
@@ -811,6 +843,15 @@ class ForkliftDetail extends Component {
                 sideshifts={this.state.sideshifts}
                 selectedSideShift={this.state.selectedSideShift}
                 onSideShiftSel={this.handleSideShiftSel}
+              />
+            ) : null}
+
+            {this.state.forkpositioners &&
+            this.state.forkpositioners.length > 0 ? (
+              <Forkpositioners
+                forkpositioners={this.state.forkpositioners}
+                selectedForkpositioner={this.state.selectedForkpositioner}
+                onForkpositionerSel={this.handleForkpositionerSel}
               />
             ) : null}
 

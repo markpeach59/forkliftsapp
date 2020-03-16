@@ -38,6 +38,8 @@ class QuoteDetail extends Component {
       valve: forky.valve,
 
       sideshift: forky.sideshift,
+      forkpositioner: forky.forkpositioner,
+
       tyre: forky.tyre,
       coldstoreprot: forky.coldstoreprot,
       seat: forky.seat,
@@ -184,6 +186,19 @@ class QuoteDetail extends Component {
             >
               {"Side Shift - " + this.state.sideshift}
             </ConditionalWrapper>
+
+            <ConditionalWrapper
+              condition={this.state.forkpositioner}
+              wrapper={children => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {"Sideshifting Fork Positioner"}
+            </ConditionalWrapper>
+
             <ConditionalWrapper
               condition={this.state.sideleverhydraulic}
               wrapper={children => (
