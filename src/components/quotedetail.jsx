@@ -28,6 +28,7 @@ class QuoteDetail extends Component {
 
       capacity: forky.capacity,
       engtype: forky.engtype,
+      powertrain: forky.powertrain,
       imgName: forky.imgname,
       masttype: forky.masttype,
       mastsize: forky.mastsize,
@@ -112,7 +113,10 @@ class QuoteDetail extends Component {
                 </React.Fragment>
               )}
             >
-              {this.state.engtype}
+              <br /> {this.state.engtype}
+              <br />
+              {this.state.powertrain ? this.state.powertrain : null}
+              <br />
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.masttype}
@@ -379,16 +383,20 @@ class QuoteDetail extends Component {
               {"Cabin Type " + this.state.cabin}
             </ConditionalWrapper>
             <br />
-            Price Includes :
-            <br />
-            ISO Safety System
-            <br />
-            Full LED Road Lighting
-            <br />
-            Amber Beacon, Safety Blue Spot
-            <br />
-            Reverse Alarm
-            <br />
+            {this.state.engtype !== "Warehouse" ? (
+              <React.Fragment>
+                Price Includes :
+                <br />
+                ISO Safety System
+                <br />
+                Full LED Road Lighting
+                <br />
+                Amber Beacon, Safety Blue Spot
+                <br />
+                Reverse Alarm
+                <br />
+              </React.Fragment>
+            ) : null}
             <br />
             <strong>Quote Price : £{this.state.price}</strong>
             <OrderCreate onOrderCreate={this.handleCreateOrder} />

@@ -56,6 +56,7 @@ class ForkliftDetail extends Component {
       model: forky.model,
       imgName: forky.imgName,
       engType: forky.engType,
+      powertrain: forky.powertrain,
       liftcapacity: forky.capacity,
       masts: forky.masts,
       valves: forky.valves,
@@ -136,6 +137,7 @@ class ForkliftDetail extends Component {
 
     quote.capacity = this.state.liftcapacity;
     quote.engtype = this.state.engType;
+    quote.powertrain = this.state.powertrain;
     quote.baseprice = this.state.basePrice;
 
     if (this.state.imgName) quote.imgname = this.state.imgName;
@@ -450,7 +452,8 @@ class ForkliftDetail extends Component {
             {this.state.liftcapacity}Kg
             <br /> {this.state.engType}
             <br />
-            {this.state.engine} <br />
+            {this.state.powertrain ? this.state.powertrain : null}
+            <br />
             <ConditionalWrapper
               condition={this.state.selectedMast}
               wrapper={children => (
@@ -748,16 +751,20 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <br />
             <br />
-            Price Includes :
-            <br />
-            ISO Safety System
-            <br />
-            Full LED Road Lighting
-            <br />
-            Amber Beacon, Safety Blue Spot
-            <br />
-            Reverse Alarm
-            <br />
+            {this.state.engType !== "Warehouse" ? (
+              <React.Fragment>
+                Price Includes :
+                <br />
+                ISO Safety System
+                <br />
+                Full LED Road Lighting
+                <br />
+                Amber Beacon, Safety Blue Spot
+                <br />
+                Reverse Alarm
+                <br />
+              </React.Fragment>
+            ) : null}
             <br />
             <strong>Quote Price : £{this.state.totalprice}</strong>
             <QuoteSave onQuoteSave={this.handleQuoteSave} />

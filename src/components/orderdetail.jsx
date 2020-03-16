@@ -23,6 +23,7 @@ class OrderDetail extends Component {
 
       capacity: forky.capacity,
       engtype: forky.engtype,
+      powertrain: forky.powertrain,
       imgName: forky.imgname,
       masttype: forky.masttype,
       mastsize: forky.mastsize,
@@ -91,7 +92,10 @@ class OrderDetail extends Component {
                 </React.Fragment>
               )}
             >
-              {this.state.engtype}
+              <br /> {this.state.engtype}
+              <br />
+              {this.state.powertrain ? this.state.powertrain : null}
+              <br />
             </ConditionalWrapper>
             <br />
             {this.state.mastsize
@@ -341,16 +345,20 @@ class OrderDetail extends Component {
               {"Cabin Type " + this.state.cabin}
             </ConditionalWrapper>
             <br />
-            Price Includes :
-            <br />
-            ISO Safety System
-            <br />
-            Full LED Road Lighting
-            <br />
-            Amber Beacon, Safety Blue Spot
-            <br />
-            Reverse Alarm
-            <br />
+            {this.state.engtype !== "Warehouse" ? (
+              <React.Fragment>
+                Price Includes :
+                <br />
+                ISO Safety System
+                <br />
+                Full LED Road Lighting
+                <br />
+                Amber Beacon, Safety Blue Spot
+                <br />
+                Reverse Alarm
+                <br />
+              </React.Fragment>
+            ) : null}
             <br />
             <strong>Order Price : £{this.state.price}</strong>
           </Grid>
