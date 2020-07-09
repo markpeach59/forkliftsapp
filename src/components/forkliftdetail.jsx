@@ -34,7 +34,11 @@ import Steerings from "./steering";
 
 import Batterys from "./battery";
 import Chargers from "./charger";
+import Engines from "./engines";
+
 import QuoteSave from "./quotesave";
+
+import Markup from "./markup";
 
 import { getForkliftDetail } from "../services/forkliftDetailService";
 import { savequote } from "../services/quotesService";
@@ -58,7 +62,11 @@ class ForkliftDetail extends Component {
       imgName: forky.imgName,
       engType: forky.engType,
       powertrain: forky.powertrain,
+      iengine: forky.powertrain,
+
       liftcapacity: forky.capacity,
+
+      engines: forky.engines,
       masts: forky.masts,
       valves: forky.valves,
       forks: forky.forks,
@@ -88,7 +96,8 @@ class ForkliftDetail extends Component {
       sideextractionbatterys: forky.sideextractionbattery,
 
       totalprice: forky.basePrice,
-      baseprice: forky.basePrice
+      baseprice: forky.basePrice,
+      markup: 0,
     });
   }
 
@@ -96,6 +105,8 @@ class ForkliftDetail extends Component {
     //console.log("Been Reset");
 
     this.setState({
+      powertrain: this.state.iengine,
+      selectedEngine: undefined,
       selectedMast: undefined,
       selectedMastSize: undefined,
       selectedValve: undefined,
@@ -128,7 +139,7 @@ class ForkliftDetail extends Component {
 
       selectedSideextractionbattery: undefined,
 
-      totalprice: this.state.baseprice
+      totalprice: this.state.baseprice,
     });
   };
 
@@ -138,11 +149,15 @@ class ForkliftDetail extends Component {
     quote.userid = this.state.user._id;
     quote.model = this.state.model;
     quote.price = this.state.totalprice;
+    quote.markup = this.state.markup;
 
     quote.capacity = this.state.liftcapacity;
     quote.engtype = this.state.engType;
     quote.powertrain = this.state.powertrain;
     quote.baseprice = this.state.basePrice;
+
+    if (this.state.selectedEngine)
+      quote.powertrain = this.state.selectedEngine.enginetype;
 
     if (this.state.imgName) quote.imgname = this.state.imgName;
 
@@ -203,7 +218,25 @@ class ForkliftDetail extends Component {
     }
   };
 
-  handleMastSel = mast => {
+  handleMarkup = (markup) => {
+    console.log("Markup - ", markup);
+    this.setState({ markup });
+  };
+
+  handleEngineSel = (engine) => {
+    const oldprice = this.state.selectedEngine
+      ? this.state.selectedEngine.price
+      : 0;
+    const newprice = this.state.totalprice + engine.price - oldprice;
+
+    this.setState({
+      selectedEngine: engine,
+      powertrain: engine.enginetype,
+      totalprice: newprice,
+    });
+  };
+
+  handleMastSel = (mast) => {
     this.setState({ selectedMast: mast });
   };
 
@@ -216,13 +249,13 @@ class ForkliftDetail extends Component {
     this.setState({
       selectedMastSize: mastsize,
       selectedMast: masttype,
-      totalprice: newprice
+      totalprice: newprice,
     });
 
     //console.log("VVV", mastsize);
   };
 
-  handleForkSel = fork => {
+  handleForkSel = (fork) => {
     const oldprice = this.state.selectedFork
       ? this.state.selectedFork.price
       : 0;
@@ -231,7 +264,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedFork: fork, totalprice: newprice });
   };
 
-  handleFork2dSel = fork2d => {
+  handleFork2dSel = (fork2d) => {
     const oldprice = this.state.selectedFork2d
       ? this.state.selectedFork2d.price
       : 0;
@@ -240,7 +273,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedFork2d: fork2d, totalprice: newprice });
   };
 
-  handleSideShiftSel = sideshift => {
+  handleSideShiftSel = (sideshift) => {
     const oldprice = this.state.selectedSideShift
       ? this.state.selectedSideShift.price
       : 0;
@@ -249,7 +282,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedSideShift: sideshift, totalprice: newprice });
   };
 
-  handleForkpositionerSel = forkpositioner => {
+  handleForkpositionerSel = (forkpositioner) => {
     const oldprice = this.state.selectedForkpositioner
       ? this.state.selectedForkpositioner.price
       : 0;
@@ -257,11 +290,11 @@ class ForkliftDetail extends Component {
 
     this.setState({
       selectedForkpositioner: forkpositioner,
-      totalprice: newprice
+      totalprice: newprice,
     });
   };
 
-  handleValveSel = valve => {
+  handleValveSel = (valve) => {
     const oldprice = this.state.selectedValve
       ? this.state.selectedValve.price
       : 0;
@@ -270,7 +303,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedValve: valve, totalprice: newprice });
   };
 
-  handleReargrabSel = reargrab => {
+  handleReargrabSel = (reargrab) => {
     const oldprice = this.state.selectedReargrab
       ? this.state.selectedReargrab.price
       : 0;
@@ -279,7 +312,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedReargrab: reargrab, totalprice: newprice });
   };
 
-  handleSideleverhydraulicSel = sideleverhydraulic => {
+  handleSideleverhydraulicSel = (sideleverhydraulic) => {
     const oldprice = this.state.selectedSideleverhydraulic
       ? this.state.selectedSideleverhydraulic.price
       : 0;
@@ -288,11 +321,11 @@ class ForkliftDetail extends Component {
 
     this.setState({
       selectedSideleverhydraulic: sideleverhydraulic,
-      totalprice: newprice
+      totalprice: newprice,
     });
   };
 
-  handlePlatformSel = platform => {
+  handlePlatformSel = (platform) => {
     const oldprice = this.state.selectedPlatform
       ? this.state.selectedPlatform.price
       : 0;
@@ -301,7 +334,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedPlatform: platform, totalprice: newprice });
   };
 
-  handleArmguardSel = armguard => {
+  handleArmguardSel = (armguard) => {
     const oldprice = this.state.selectedArmguard
       ? this.state.selectedArmguard.price
       : 0;
@@ -310,14 +343,14 @@ class ForkliftDetail extends Component {
     this.setState({ selectedArmguard: armguard, totalprice: newprice });
   };
 
-  handleBfsSel = bfs => {
+  handleBfsSel = (bfs) => {
     const oldprice = this.state.selectedBfs ? this.state.selectedBfs.price : 0;
     const newprice = this.state.totalprice + bfs.price - oldprice;
 
     this.setState({ selectedBfs: bfs, totalprice: newprice });
   };
 
-  handleTrolleySel = trolley => {
+  handleTrolleySel = (trolley) => {
     const oldprice = this.state.selectedTrolley
       ? this.state.selectedTrolley.price
       : 0;
@@ -326,7 +359,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedTrolley: trolley, totalprice: newprice });
   };
 
-  handleBlinkeySel = blinkey => {
+  handleBlinkeySel = (blinkey) => {
     const oldprice = this.state.selectedBlinkey
       ? this.state.selectedBlinkey.price
       : 0;
@@ -335,7 +368,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedBlinkey: blinkey, totalprice: newprice });
   };
 
-  handleLoadbackrestSel = loadbackrest => {
+  handleLoadbackrestSel = (loadbackrest) => {
     const oldprice = this.state.selectedLoadbackrest
       ? this.state.selectedLoadbackrest.price
       : 0;
@@ -344,7 +377,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedLoadbackrest: loadbackrest, totalprice: newprice });
   };
 
-  handleSteeringSel = steering => {
+  handleSteeringSel = (steering) => {
     const oldprice = this.state.selectedSteering
       ? this.state.selectedSteering.price
       : 0;
@@ -353,7 +386,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedSteering: steering, totalprice: newprice });
   };
 
-  handleTyreSel = tyre => {
+  handleTyreSel = (tyre) => {
     const oldprice = this.state.selectedTyre
       ? this.state.selectedTyre.price
       : 0;
@@ -362,7 +395,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedTyre: tyre, totalprice: newprice });
   };
 
-  handleBatterySel = battery => {
+  handleBatterySel = (battery) => {
     const oldprice = this.state.selectedBattery
       ? this.state.selectedBattery.price
       : 0;
@@ -377,11 +410,11 @@ class ForkliftDetail extends Component {
       selectedBattery: battery,
       selectedCharger: undefined,
       chargers: battery.chargers,
-      totalprice: newprice
+      totalprice: newprice,
     });
   };
 
-  handleChargerSel = charger => {
+  handleChargerSel = (charger) => {
     const oldprice = this.state.selectedCharger
       ? this.state.selectedCharger.price
       : 0;
@@ -390,7 +423,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedCharger: charger, totalprice: newprice });
   };
 
-  handleSideextractionbatterySel = sideextractionbattery => {
+  handleSideextractionbatterySel = (sideextractionbattery) => {
     const oldprice = this.state.selectedSideextractionbattery
       ? this.state.selectedSideextractionbattery.price
       : 0;
@@ -399,11 +432,11 @@ class ForkliftDetail extends Component {
 
     this.setState({
       selectedSideextractionbattery: sideextractionbattery,
-      totalprice: newprice
+      totalprice: newprice,
     });
   };
 
-  handleSeatSel = seat => {
+  handleSeatSel = (seat) => {
     const oldprice = this.state.selectedSeat
       ? this.state.selectedSeat.price
       : 0;
@@ -412,7 +445,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedSeat: seat, totalprice: newprice });
   };
 
-  handleCabinSel = cabin => {
+  handleCabinSel = (cabin) => {
     const oldprice = this.state.selectedCabin
       ? this.state.selectedCabin.price
       : 0;
@@ -421,7 +454,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedCabin: cabin, totalprice: newprice });
   };
 
-  handleColdStoreProtSel = coldstoreprot => {
+  handleColdStoreProtSel = (coldstoreprot) => {
     const oldprice = this.state.selectedColdStoreProt
       ? this.state.selectedColdStoreProt.price
       : 0;
@@ -429,11 +462,11 @@ class ForkliftDetail extends Component {
 
     this.setState({
       selectedColdStoreProt: coldstoreprot,
-      totalprice: newprice
+      totalprice: newprice,
     });
   };
 
-  handleHeaterSel = heater => {
+  handleHeaterSel = (heater) => {
     const oldprice = this.state.selectedHeater
       ? this.state.selectedHeater.price
       : 0;
@@ -442,7 +475,7 @@ class ForkliftDetail extends Component {
     this.setState({ selectedHeater: heater, totalprice: newprice });
   };
 
-  handleAirconSel = aircon => {
+  handleAirconSel = (aircon) => {
     const oldprice = this.state.selectedAircon
       ? this.state.selectedAircon.price
       : 0;
@@ -475,7 +508,7 @@ class ForkliftDetail extends Component {
             <br />
             <ConditionalWrapper
               condition={this.state.selectedMast}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -486,7 +519,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedMastSize}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -504,7 +537,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedValve}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -517,7 +550,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedFork}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -530,7 +563,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedFork2d}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -543,7 +576,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedSideShift}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -556,7 +589,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedForkpositioner}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -569,7 +602,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedSideleverhydraulic}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -580,7 +613,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedColdStoreProt}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -593,7 +626,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedReargrab}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -606,7 +639,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedArmguard}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -617,7 +650,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedPlatform}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -628,7 +661,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedSteering}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -639,7 +672,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedTyre}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -652,7 +685,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedBattery}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -665,7 +698,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedCharger}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -678,7 +711,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedBfs}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -689,7 +722,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedTrolley}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -700,7 +733,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedBlinkey}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -711,7 +744,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedSideextractionbattery}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -724,7 +757,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedLoadbackrest}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -735,7 +768,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedSeat}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -748,7 +781,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedCabin}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -761,7 +794,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedHeater}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -772,7 +805,7 @@ class ForkliftDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedAircon}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -782,11 +815,8 @@ class ForkliftDetail extends Component {
               {this.state.selectedAircon ? "Aircon " : null}
             </ConditionalWrapper>
             <br />
-            <br />
             {this.state.engType !== "Warehouse" ? (
               <React.Fragment>
-                Price Includes :
-                <br />
                 ISO Safety System
                 <br />
                 Full LED Road Lighting
@@ -798,11 +828,23 @@ class ForkliftDetail extends Component {
               </React.Fragment>
             ) : null}
             <br />
-            <strong>Quote Price : £{this.state.totalprice}</strong>
+            <strong>
+              Quote Price : £
+              {this.state.totalprice + parseInt(this.state.markup)}
+            </strong>
             <QuoteSave onQuoteSave={this.handleQuoteSave} />
           </Grid>
           <Grid item xs={8}>
+            <Markup onMarkup={this.handleMarkup} />
             <ResetFilters onResetFilters={this.handleResetFilters} />
+
+            {this.state.engines && this.state.engines.length > 0 ? (
+              <Engines
+                engines={this.state.engines}
+                selectedEngine={this.state.selectedEngine}
+                onEngineSel={this.handleEngineSel}
+              />
+            ) : null}
 
             {this.state.masts && this.state.masts.length > 0 ? (
               <Masts

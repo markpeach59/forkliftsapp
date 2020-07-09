@@ -20,7 +20,7 @@ import "typeface-roboto";
 
 class Orders extends Component {
   state = {
-    orders: []
+    orders: [],
   };
 
   async componentDidMount() {
@@ -28,7 +28,7 @@ class Orders extends Component {
     //console.log("Orders Returned", orders);
 
     this.setState({
-      orders
+      orders,
     });
   }
 
@@ -48,7 +48,7 @@ class Orders extends Component {
 
             <Table>
               <TableBody>
-                {t.map(x => (
+                {t.map((x) => (
                   <TableRow key={x._id}>
                     <TableCell>
                       <Link to={{ pathname: "/orders/" + x._id }}>
@@ -62,6 +62,14 @@ class Orders extends Component {
                     <TableCell>
                       {" £"}
                       {x.price}
+                    </TableCell>
+                    <TableCell>
+                      {" £"}
+                      {x.markup}
+                    </TableCell>
+                    <TableCell>
+                      {" £"}
+                      {x.price + x.markup}
                     </TableCell>
                   </TableRow>
                 ))}

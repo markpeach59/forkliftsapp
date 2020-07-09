@@ -20,14 +20,14 @@ import "typeface-roboto";
 
 class Quotes extends Component {
   state = {
-    quotes: []
+    quotes: [],
   };
 
   async componentDidMount() {
     const { data: quotes } = await getQuotes();
     //console.log("Quotes Returned", quotes);
     this.setState({
-      quotes
+      quotes,
     });
   }
 
@@ -47,7 +47,7 @@ class Quotes extends Component {
 
             <Table>
               <TableBody>
-                {t.map(x => (
+                {t.map((x) => (
                   <TableRow key={x._id}>
                     <TableCell>
                       <Link to={{ pathname: "/quotes/" + x._id }}>
@@ -61,6 +61,14 @@ class Quotes extends Component {
                     <TableCell>
                       {" £"}
                       {x.price}
+                    </TableCell>
+                    <TableCell>
+                      {" £"}
+                      {x.markup}
+                    </TableCell>
+                    <TableCell>
+                      {" £"}
+                      {x.price + x.markup}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -20,7 +20,7 @@ class OrderDetail extends Component {
       model: forky.model,
 
       price: forky.price,
-
+      markup: forky.markup,
       capacity: forky.capacity,
       engtype: forky.engtype,
       powertrain: forky.powertrain,
@@ -58,7 +58,7 @@ class OrderDetail extends Component {
 
       trolley: forky.manualtrolley,
       blinkey: forky.blinkey,
-      sideextractionbattery: forky.sideextractionbattery
+      sideextractionbattery: forky.sideextractionbattery,
     });
   }
 
@@ -76,7 +76,7 @@ class OrderDetail extends Component {
             <br />
             <ConditionalWrapper
               condition={this.state.capacity}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -87,7 +87,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.engtype}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -106,7 +106,7 @@ class OrderDetail extends Component {
             <br />
             <ConditionalWrapper
               condition={this.state.forks}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -117,7 +117,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.fork2d}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -128,7 +128,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.valve}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -139,7 +139,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.sideshift}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -151,7 +151,7 @@ class OrderDetail extends Component {
 
             <ConditionalWrapper
               condition={this.state.forkpositioner}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -163,7 +163,7 @@ class OrderDetail extends Component {
 
             <ConditionalWrapper
               condition={this.state.sideleverhydraulic}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -174,7 +174,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.coldstoreprot}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -185,7 +185,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.tyre}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -196,7 +196,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.aircon}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -207,7 +207,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.heater}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -218,7 +218,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.reargrab}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -229,7 +229,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.battery}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -240,7 +240,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.charger}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -251,7 +251,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.bfs}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -262,7 +262,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.trolley}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -273,7 +273,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.blinkey}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -284,7 +284,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.sideextractionbattery}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -295,7 +295,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.armguard}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -306,7 +306,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.platform}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -317,7 +317,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.loadbackrest}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -328,7 +328,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.steering}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -339,7 +339,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.seat}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
@@ -350,7 +350,7 @@ class OrderDetail extends Component {
             </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.cabin}
-              wrapper={children => (
+              wrapper={(children) => (
                 <React.Fragment>
                   {children}
                   <br />
