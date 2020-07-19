@@ -16,6 +16,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
+import TableHead from "@material-ui/core/TableHead";
+
 import "typeface-roboto";
 
 class Orders extends Component {
@@ -47,6 +49,15 @@ class Orders extends Component {
             <h2>List of Orders</h2>
 
             <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date & Time</TableCell>
+                  <TableCell align="right">Model</TableCell>
+                  <TableCell align="right">Cost</TableCell>
+                  <TableCell align="right">Markup</TableCell>
+                  <TableCell align="right">Total</TableCell>
+                </TableRow>
+              </TableHead>
               <TableBody>
                 {t.map((x) => (
                   <TableRow key={x._id}>
@@ -58,16 +69,16 @@ class Orders extends Component {
                         </Button>
                       </Link>
                     </TableCell>
-                    <TableCell> {x.model}</TableCell>
-                    <TableCell>
+                    <TableCell align="right"> {x.model}</TableCell>
+                    <TableCell align="right">
                       {" £"}
                       {x.price}
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="right">
                       {" £"}
                       {x.markup}
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="right">
                       {" £"}
                       {x.price + x.markup}
                     </TableCell>
