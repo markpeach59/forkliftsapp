@@ -375,7 +375,10 @@ class OrderDetail extends Component {
               </React.Fragment>
             ) : null}
             <br />
-            <strong>Order Price : £{this.state.price}</strong>
+
+            <strong>
+              Order Price : £{this.state.price + parseInt(this.state.markup)}
+            </strong>
           </Grid>
         </Grid>
       </React.Fragment>

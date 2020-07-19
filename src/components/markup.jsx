@@ -60,7 +60,7 @@ const Markup = (props) => {
             InputProps={{ name: "themarkup" }}
             onChange={(e) => setThemarkup(e.target.value)}
             value={themarkup}
-            fullwidth
+            fullwidth="true"
           />
         </DialogContent>
         <DialogActions>
