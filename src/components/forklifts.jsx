@@ -20,7 +20,7 @@ import "typeface-roboto";
 class Forklifts extends Component {
   state = {
     forklifts: [],
-    loading: true
+    loading: true,
   };
 
   async componentDidMount() {
@@ -30,7 +30,7 @@ class Forklifts extends Component {
       forklifts,
       engTypesFilter: getEngTypes(),
       capacityFilter: getCapacityFilters(),
-      loading: false
+      loading: false,
     });
   }
 
@@ -39,15 +39,15 @@ class Forklifts extends Component {
 
     this.setState({
       selectedEngine: undefined,
-      selectedCapacityFilter: undefined
+      selectedCapacityFilter: undefined,
     });
   };
 
-  handleCapFilter = capfilter => {
+  handleCapFilter = (capfilter) => {
     this.setState({ selectedCapacityFilter: capfilter });
   };
 
-  handleEngineSel = engine => {
+  handleEngineSel = (engine) => {
     //console.log("ZZ", engine.name);
     this.setState({ selectedEngine: engine });
     //console.log("ZZZ", this.state.selectedEngine.name);
@@ -57,17 +57,18 @@ class Forklifts extends Component {
     /* filter for capacity - then engtype */
 
     const mseng = this.state.selectedEngine
-      ? models.filter(m => m.engType === this.state.selectedEngine.name)
+      ? models.filter((m) => m.engType === this.state.selectedEngine.name)
       : models;
 
-    var catchment = 510;
+    // this is hardcoding tolerances for the capacity filter to pick up immediate cap values
+    var catchment = 310;
     if (this.state.selectedCapacityFilter)
-      if (this.state.selectedCapacityFilter.capFilter === 2000) catchment = 410;
+      if (this.state.selectedCapacityFilter.capFilter > 1500) catchment = 100;
 
     const mscap = this.state.selectedCapacityFilter
       ? mseng.filter(
           //m => m.capacity === this.state.selectedCapacityFilter.capFilter
-          m =>
+          (m) =>
             m.capacity <= this.state.selectedCapacityFilter.capFilter &&
             m.capacity > this.state.selectedCapacityFilter.capFilter - catchment
         )
@@ -90,13 +91,13 @@ class Forklifts extends Component {
       ([key, values]) =>
         (g[key] = {
           range: values.range,
-          models: this.filterModels(values.models)
+          models: this.filterModels(values.models),
         })
     );
     //console.log("TTT", this.state.selectedEngine, " ", g);
 
     /* remove any ranges that have zero models meeting the criteria */
-    const tt = g.filter(x => x.models.length > 0);
+    const tt = g.filter((x) => x.models.length > 0);
 
     return tt;
   }
@@ -124,7 +125,7 @@ class Forklifts extends Component {
               <React.Fragment key={key}>
                 <Typography variant="h6">{values.range} Range</Typography>
 
-                {values.models.map(g => (
+                {values.models.map((g) => (
                   <div key={g._id}>
                     <Link to={{ pathname: "/forkliftdetail/" + g.model }}>
                       <Button>{g.model}</Button>
