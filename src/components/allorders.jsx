@@ -25,6 +25,8 @@ import "typeface-roboto";
 class Orders extends Component {
   state = {
     orders: [],
+    user: [],
+    dealers: [],
   };
 
   async componentDidMount() {

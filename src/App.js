@@ -33,6 +33,9 @@ import OrderDetail from "./components/orderdetail";
 import AllOrders from "./components/allorders";
 import DealerHeader from "./components/dealerheader";
 
+import ListAllUsers from "./components/listallusers";
+import ListAllDealers from "./components/listalldealers";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -81,8 +84,20 @@ class App extends Component {
                 )}
 
                 {this.state.user && this.state.user.isAdmin && (
+                  <Link to={{ pathname: "/listallusers" }}>
+                    <Button color="inherit">All Users</Button>
+                  </Link>
+                )}
+
+                {this.state.user && this.state.user.isAdmin && (
                   <Link to={{ pathname: "/register" }}>
                     <Button color="inherit">Register User</Button>
+                  </Link>
+                )}
+
+                {this.state.user && this.state.user.isAdmin && (
+                  <Link to={{ pathname: "/listalldealers" }}>
+                    <Button color="inherit">All Dealers</Button>
                   </Link>
                 )}
 
@@ -135,6 +150,11 @@ class App extends Component {
                 component={OrderDetail}
               />
               <ProtectedRoute path="/orders" component={Orders} />
+              <ProtectedRoute path="/listallusers" component={ListAllUsers} />
+              <ProtectedRoute
+                path="/listalldealers"
+                component={ListAllDealers}
+              />
               <ProtectedRoute path="/allorders" component={AllOrders} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
