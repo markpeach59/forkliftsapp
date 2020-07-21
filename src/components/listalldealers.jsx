@@ -1,13 +1,12 @@
-import _ from "lodash";
+//import _ from "lodash";
 import React, { Component } from "react";
 
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
-import { getUsers } from "../services/userService";
 import { getDealers } from "../services/dealerService";
 
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
