@@ -27,7 +27,11 @@ class DealerHeader extends Component {
     return (
       <React.Fragment>
         <React.Fragment>
-          <img src={this.state.headerlogo} alt="" style={{ paddingTop: 110 }} />
+          <img
+            src={this.state.headerlogo}
+            alt=""
+            style={{ paddingTop: 90, paddingBottom: 10 }}
+          />
         </React.Fragment>
       </React.Fragment>
     );
