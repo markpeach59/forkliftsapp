@@ -65,55 +65,70 @@ class App extends Component {
             <AppBar>
               <ToolBar>
                 {this.state.user ? "Hello " + this.state.user.fullname : null}
-                <Link to={{ pathname: "/" }}>
+                <Link to={{ pathname: "/" }} style={{ color: "#fff" }}>
                   <Button color="inherit">Forklifts</Button>
                 </Link>
 
-                <Link to={{ pathname: "/quotes" }}>
+                <Link to={{ pathname: "/quotes" }} style={{ color: "#fff" }}>
                   <Button color="inherit">Quotes</Button>
                 </Link>
 
-                <Link to={{ pathname: "/orders" }}>
+                <Link to={{ pathname: "/orders" }} style={{ color: "#fff" }}>
                   <Button color="inherit">Orders</Button>
                 </Link>
 
                 {this.state.user && this.state.user.isAdmin && (
-                  <Link to={{ pathname: "/allorders" }}>
+                  <Link
+                    to={{ pathname: "/allorders" }}
+                    style={{ color: "#fff" }}
+                  >
                     <Button color="inherit">All Orders</Button>
                   </Link>
                 )}
 
                 {this.state.user && this.state.user.isAdmin && (
-                  <Link to={{ pathname: "/listallusers" }}>
+                  <Link
+                    to={{ pathname: "/listallusers" }}
+                    style={{ color: "#fff" }}
+                  >
                     <Button color="inherit">All Users</Button>
                   </Link>
                 )}
 
                 {this.state.user && this.state.user.isAdmin && (
-                  <Link to={{ pathname: "/register" }}>
+                  <Link
+                    to={{ pathname: "/register" }}
+                    style={{ color: "#fff" }}
+                  >
                     <Button color="inherit">Register User</Button>
                   </Link>
                 )}
 
                 {this.state.user && this.state.user.isAdmin && (
-                  <Link to={{ pathname: "/listalldealers" }}>
+                  <Link
+                    to={{ pathname: "/listalldealers" }}
+                    style={{ color: "#fff" }}
+                  >
                     <Button color="inherit">All Dealers</Button>
                   </Link>
                 )}
 
                 {this.state.user && this.state.user.isAdmin && (
-                  <Link to={{ pathname: "/registerdealer" }}>
+                  <Link
+                    to={{ pathname: "/registerdealer" }}
+                    style={{ color: "#fff" }}
+                  >
                     <Button color="inherit">Register Dealer</Button>
                   </Link>
                 )}
 
                 {this.state.user && (
-                  <Link to={{ pathname: "/logout" }}>
+                  <Link to={{ pathname: "/logout" }} style={{ color: "#fff" }}>
                     <Button color="inherit">Logout</Button>
                   </Link>
                 )}
                 {!this.state.user && (
-                  <Link to={{ pathname: "/login" }}>
+                  <Link to={{ pathname: "/login" }} style={{ color: "#fff" }}>
                     <Button color="inherit">Login</Button>
                   </Link>
                 )}
