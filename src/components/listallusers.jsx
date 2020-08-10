@@ -27,10 +27,10 @@ class ListAllUsers extends Component {
 
   async componentDidMount() {
     const { data: users } = await getUsers();
-    console.log("Users Returned", users);
+    //console.log("Users Returned", users);
 
     const { data: dealers } = await getDealers();
-    console.log("Dealers Returned", dealers);
+    //console.log("Dealers Returned", dealers);
 
     this.setState({
       users,
@@ -47,7 +47,7 @@ class ListAllUsers extends Component {
     if (count === 0) return <p>There are no Users in the database</p>;
 
     const dealername = (id) => {
-      console.log(id);
+      //console.log(id);
       const m = _.find(u, ["_id", id]).dealerId;
 
       if (m === undefined) return " - ";

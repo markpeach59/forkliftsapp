@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import { getAllOrders } from "../services/allOrdersService";
+import { getAllQuotes } from "../services/allQuotesService";
 import { getUsers } from "../services/userService";
 import { getDealers } from "../services/dealerService";
 
@@ -22,16 +22,16 @@ import TableHead from "@material-ui/core/TableHead";
 
 import "typeface-roboto";
 
-class Orders extends Component {
+class AllQuotes extends Component {
   state = {
-    orders: [],
+    quotes: [],
     user: [],
     dealers: [],
   };
 
   async componentDidMount() {
-    const { data: orders } = await getAllOrders();
-    //console.log("Orders Returned", orders);
+    const { data: quotes } = await getAllQuotes();
+    //console.log("Quotes Returned", quotes);
 
     const { data: users } = await getUsers();
     //console.log("Users Returned", users);
@@ -40,21 +40,21 @@ class Orders extends Component {
     //console.log("Dealers Returned", dealers);
 
     this.setState({
-      orders,
+      quotes,
       users,
       dealers,
     });
   }
 
   render() {
-    const t = this.state.orders;
+    const t = this.state.quotes;
     const u = this.state.users;
     const d = this.state.dealers;
     //console.log("LL", t);
 
-    const { length: count } = this.state.orders;
+    const { length: count } = this.state.quotes;
 
-    if (count === 0) return <p>There are no Orders in the database</p>;
+    if (count === 0) return <p>There are no Quotes in the database</p>;
 
     const dealername = (id) => {
       //console.log(id);
@@ -70,7 +70,7 @@ class Orders extends Component {
       <React.Fragment>
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <h2>List of Orders</h2>
+            <h2>List of Quotes</h2>
 
             <Table>
               <TableHead>
@@ -87,7 +87,7 @@ class Orders extends Component {
                 {t.map((x) => (
                   <TableRow key={x._id}>
                     <TableCell>
-                      <Link to={{ pathname: "/orders/" + x._id }}>
+                      <Link to={{ pathname: "/quotes/" + x._id }}>
                         <Button>
                           {_.slice(x.updatedAt, 0, 10)}{" "}
                           {_.slice(x.updatedAt, 11, 19)}
@@ -119,4 +119,4 @@ class Orders extends Component {
   }
 }
 
-export default Orders;
+export default AllQuotes;

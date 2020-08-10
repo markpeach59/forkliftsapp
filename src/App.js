@@ -30,6 +30,7 @@ import QuoteDetail from "./components/quotedetail";
 import Orders from "./components/orders";
 import OrderDetail from "./components/orderdetail";
 
+import AllQuotes from "./components/allquotes";
 import AllOrders from "./components/allorders";
 import DealerHeader from "./components/dealerheader";
 
@@ -77,14 +78,25 @@ class App extends Component {
                   <Button color="inherit">Orders</Button>
                 </Link>
 
-                {this.state.user && this.state.user.isAdmin && (
-                  <Link
-                    to={{ pathname: "/allorders" }}
-                    style={{ color: "#fff" }}
-                  >
-                    <Button color="inherit">All Orders</Button>
-                  </Link>
-                )}
+                {this.state.user &&
+                  (this.state.user.isAdmin || this.state.user.isMaximGB) && (
+                    <Link
+                      to={{ pathname: "/allquotes" }}
+                      style={{ color: "#fff" }}
+                    >
+                      <Button color="inherit">All Quotes</Button>
+                    </Link>
+                  )}
+
+                {this.state.user &&
+                  (this.state.user.isAdmin || this.state.user.isMaximGB) && (
+                    <Link
+                      to={{ pathname: "/allorders" }}
+                      style={{ color: "#fff" }}
+                    >
+                      <Button color="inherit">All Orders</Button>
+                    </Link>
+                  )}
 
                 {this.state.user && this.state.user.isAdmin && (
                   <Link
@@ -170,6 +182,7 @@ class App extends Component {
                 path="/listalldealers"
                 component={ListAllDealers}
               />
+              <ProtectedRoute path="/allquotes" component={AllQuotes} />
               <ProtectedRoute path="/allorders" component={AllOrders} />
               <Route path="/not-found" component={NotFound} />
               <Redirect from="/" exact to="/forklifts" />
