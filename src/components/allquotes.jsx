@@ -20,24 +20,26 @@ import TableCell from "@material-ui/core/TableCell";
 
 import TableHead from "@material-ui/core/TableHead";
 
+import Reassignquote from "./reassignquote";
 import "typeface-roboto";
+import { reassignQuote } from "../services/quotesService";
 
 class AllQuotes extends Component {
   state = {
     quotes: [],
-    user: [],
+    users: [],
     dealers: [],
   };
 
   async componentDidMount() {
     const { data: quotes } = await getAllQuotes();
-    //console.log("Quotes Returned", quotes);
+    console.log("Quotes Returned", quotes);
 
     const { data: users } = await getUsers();
-    //console.log("Users Returned", users);
+    console.log("Users Returned", users);
 
     const { data: dealers } = await getDealers();
-    //console.log("Dealers Returned", dealers);
+    console.log("Dealers Returned", dealers);
 
     this.setState({
       quotes,
@@ -45,6 +47,21 @@ class AllQuotes extends Component {
       dealers,
     });
   }
+
+  handleReassign = (quoteid, newowner) => {
+    //console.log("Reassign - ", quoteid, " ", newowner);
+
+    const thequote = _.find(this.state.quotes, ["_id", quoteid]);
+
+    if (thequote === undefined) return;
+
+    //console.log("the Quote", thequote);
+    thequote.userid = newowner;
+    this.setState({ thequote });
+    //console.log("the Amended Quote", thequote);
+
+    reassignQuote(quoteid, newowner);
+  };
 
   render() {
     const t = this.state.quotes;
@@ -81,6 +98,7 @@ class AllQuotes extends Component {
                   <TableCell>Dealer</TableCell>
                   <TableCell align="right">Model</TableCell>
                   <TableCell align="right">Cost</TableCell>
+                  <TableCell align="right">Reassign</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -107,6 +125,14 @@ class AllQuotes extends Component {
                     <TableCell align="right">
                       {" £"}
                       {x.price}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Reassignquote
+                        quoteid={x._id}
+                        quoteowner={x.userid}
+                        users={u}
+                        onReassign={this.handleReassign}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}

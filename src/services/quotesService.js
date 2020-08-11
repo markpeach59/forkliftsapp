@@ -20,3 +20,9 @@ export function getQuoteDetail(id) {
 export function createOrderFromQuote(id) {
   return http.patch(apiEndPoint + "/" + id);
 }
+
+export function reassignQuote(id, newuserid) {
+  return http.patch(apiEndPoint + "/reassign/" + id, {
+    userid: newuserid,
+  });
+}
