@@ -815,9 +815,8 @@ class ForkliftDetail extends Component {
               {this.state.selectedAircon ? "Aircon " : null}
             </ConditionalWrapper>
             <br />
-            {this.state.engType !== "Electric" ? (
+            {this.state.engType == "Electric" ? (
               <React.Fragment>
-                ISO Safety System
                 Rear Grab Handle with Horn
                 <br />
               </React.Fragment>
