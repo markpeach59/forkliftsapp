@@ -25,6 +25,8 @@ import Armguards from "./armguard";
 import Fork2ds from "./fork2d";
 import Bfs from "./bfs";
 
+import Upsweptexhausts from "./upsweptexhaust";
+
 import Trolley from "./trolley";
 import Blinkey from "./blinkey";
 import Sideextractionbatterys from "./sideextractionbattery";
@@ -77,6 +79,8 @@ class ForkliftDetail extends Component {
       coldstoreprots: forky.coldstoreprot,
       cabins: forky.cabin,
 
+      upsweptexhausts: forky.upsweptexhaust,
+
       reargrabs: forky.reargrab,
       sideleverhydraulics: forky.sideleverhydraulic,
       platforms: forky.platform,
@@ -118,6 +122,8 @@ class ForkliftDetail extends Component {
       selectedColdStoreProt: undefined,
       selectedSeat: undefined,
       selectedCabin: undefined,
+
+      selectedUpsweptexhaust: undefined,
 
       selectedAircon: undefined,
       selectedHeater: undefined,
@@ -177,6 +183,9 @@ class ForkliftDetail extends Component {
     if (this.state.selectedForkpositioner) quote.forkpositioner = true;
 
     if (this.state.selectedTyre) quote.tyre = this.state.selectedTyre.tyretype;
+
+    if (this.state.selectedUpsweptexhaust) quote.upsweptexhaust = true;
+
     if (this.state.selectedColdStoreProt) quote.coldstoreprot = true;
     if (this.state.selectedSeat) quote.seat = this.state.selectedSeat.seattype;
     if (this.state.selectedCabin)
@@ -393,6 +402,15 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + tyre.price - oldprice;
 
     this.setState({ selectedTyre: tyre, totalprice: newprice });
+  };
+
+  handleUpsweptexhaustSel = (upsweptexhaust) => {
+    const oldprice = this.state.selectedUpsweptexhaust
+      ? this.state.selectedUpsweptexhaust.price
+      : 0;
+    const newprice = this.state.totalprice + upsweptexhaust.price - oldprice;
+
+    this.setState({ selectedUpsweptexhaust: upsweptexhaust, totalprice: newprice });
   };
 
   handleBatterySel = (battery) => {
@@ -683,6 +701,21 @@ class ForkliftDetail extends Component {
                 ? "Tyre - " + this.state.selectedTyre.tyretype
                 : null}
             </ConditionalWrapper>
+
+            <ConditionalWrapper
+              condition={this.state.selectedUpsweptexhaust}
+              wrapper={(children) => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedUpsweptexhaust
+                ? "Upswept Exhaust"
+                : null}
+            </ConditionalWrapper>
+
             <ConditionalWrapper
               condition={this.state.selectedBattery}
               wrapper={(children) => (
@@ -909,6 +942,14 @@ class ForkliftDetail extends Component {
                 tyres={this.state.tyres}
                 selectedTyre={this.state.selectedTyre}
                 onTyreSel={this.handleTyreSel}
+              />
+            ) : null}
+
+            {this.state.upsweptexhausts && this.state.upsweptexhausts.length > 0 ? (
+              <Upsweptexhausts
+                upsweptexhausts={this.state.upsweptexhausts}
+                selectedUpsweptexhaust={this.state.selectedUpsweptexhaust}
+                onUpsweptexhaustSel={this.handleUpsweptexhaustSel}
               />
             ) : null}
 
