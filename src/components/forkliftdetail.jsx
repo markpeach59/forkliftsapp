@@ -34,6 +34,9 @@ import Sideextractionbatterys from "./sideextractionbattery";
 import Loadbackrests from "./loadbackrest";
 import Steerings from "./steering";
 
+import Batterycompartments from "./batterycompartment";
+
+
 import Batterys from "./battery";
 import Chargers from "./charger";
 import Engines from "./engines";
@@ -93,6 +96,8 @@ class ForkliftDetail extends Component {
       heaters: forky.heater,
       aircons: forky.aircon,
 
+      batterycompartments: forky.batterycompartment,
+
       batterys: forky.batteries,
       bfss: forky.bfs,
       trolleys: forky.trolley,
@@ -129,6 +134,9 @@ class ForkliftDetail extends Component {
       selectedHeater: undefined,
       selectedReargrab: undefined,
       selectedSideleverhydraulic: undefined,
+
+      selectedBatterycompartment: undefined,
+
       selectedBattery: undefined,
       selectedCharger: undefined,
 
@@ -195,6 +203,9 @@ class ForkliftDetail extends Component {
     if (this.state.selectedHeater) quote.heater = true;
     if (this.state.selectedReargrab) quote.reargrab = true;
     if (this.state.selectedSideleverhydraulic) quote.sideleverhydraulic = true;
+
+    if (this.state.selectedBatterycompartment) quote.batterycompartment = this.state.selectedBatterycompartment.batterycompartmenttype;
+
     if (this.state.selectedBattery)
       quote.battery = this.state.selectedBattery.batterytype;
     if (this.state.selectedCharger)
@@ -411,6 +422,15 @@ class ForkliftDetail extends Component {
     const newprice = this.state.totalprice + upsweptexhaust.price - oldprice;
 
     this.setState({ selectedUpsweptexhaust: upsweptexhaust, totalprice: newprice });
+  };
+
+  handleBatterycompartmentSel = (batterycompartment) => {
+    const oldprice = this.state.selectedBatterycompartment
+      ? this.state.selectedBatterycompartment.price
+      : 0;
+    const newprice = this.state.totalprice + batterycompartment.price - oldprice;
+
+    this.setState({ selectedBatterycompartment: batterycompartment, totalprice: newprice });
   };
 
   handleBatterySel = (battery) => {
@@ -715,7 +735,19 @@ class ForkliftDetail extends Component {
                 ? "Upswept Exhaust"
                 : null}
             </ConditionalWrapper>
-
+            <ConditionalWrapper
+              condition={this.state.selectedBatterycompartment}
+              wrapper={(children) => (
+                <React.Fragment>
+                  {children}
+                  <br />
+                </React.Fragment>
+              )}
+            >
+              {this.state.selectedBatterycompartment
+                ? "Battery Compartment - " + this.state.selectedBatterycompartment.batterycompartmenttype
+                : null}
+            </ConditionalWrapper>
             <ConditionalWrapper
               condition={this.state.selectedBattery}
               wrapper={(children) => (
@@ -1018,6 +1050,14 @@ class ForkliftDetail extends Component {
                 seats={this.state.seats}
                 selectedSeat={this.state.selectedSeat}
                 onSeatSel={this.handleSeatSel}
+              />
+            ) : null}
+
+            {this.state.batterycompartments && this.state.batterycompartments.length > 0 ? (
+              <Batterycompartments
+                batterycompartments={this.state.batterycompartments}
+                selectedBatterycompartment={this.state.selectedBatterycompartment}
+                onBatterycompartmentSel={this.handleBatterycompartmentSel}
               />
             ) : null}
 
