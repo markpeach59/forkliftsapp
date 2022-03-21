@@ -426,11 +426,29 @@ class ForkliftDetail extends Component {
 
   handleBatterycompartmentSel = (batterycompartment) => {
     const oldprice = this.state.selectedBatterycompartment
-      ? this.state.selectedBatterycompartment.price
-      : 0;
-    const newprice = this.state.totalprice + batterycompartment.price - oldprice;
+    ? this.state.selectedBatterycompartment.price
+    : 0;
 
-    this.setState({ selectedBatterycompartment: batterycompartment, totalprice: newprice });
+  const oldprice1 = this.state.selectedBattery
+    ? this.state.selectedBattery.price
+    : 0;
+     
+  const oldprice2 = this.state.selectedCharger
+    ? this.state.selectedCharger.price
+    : 0;
+          
+  const newprice =
+    this.state.totalprice + batterycompartment.price - oldprice - oldprice1 - oldprice2;
+      
+  console.log('Battery Selection State');
+
+  this.setState({ 
+    selectedBatterycompartment: batterycompartment, 
+    selectedBattery: undefined,
+    selectedCharger: undefined,
+    chargers: undefined, 
+    totalprice: newprice 
+  });
   };
 
   handleBatterySel = (battery) => {
