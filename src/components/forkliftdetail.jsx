@@ -107,6 +107,7 @@ class ForkliftDetail extends Component {
       totalprice: forky.basePrice,
       baseprice: forky.basePrice,
       markup: 0,
+      batteryconstraint: false,
     });
   }
 
@@ -154,6 +155,7 @@ class ForkliftDetail extends Component {
       selectedSideextractionbattery: undefined,
 
       totalprice: this.state.baseprice,
+      batteryconstraint: false,
     });
   };
 
@@ -429,26 +431,57 @@ class ForkliftDetail extends Component {
     ? this.state.selectedBatterycompartment.price
     : 0;
 
-  const oldprice1 = this.state.selectedBattery
+
+    console.log("__", batterycompartment);
+ var constraint = false;
+ if( batterycompartment.batterycompartmenttype !== "Standard")
+    constraint=true;
+
+    console.log("___", constraint)
+
+    if (this.state.selectedBattery && this.state.selectedBattery.batterytype === "48V 625 A/H"){
+          
+    const newprice =
+      this.state.totalprice + batterycompartment.price - oldprice;
+      
+      console.log('Battery Selection State -', this.state.selectedBattery.batterytype );
+      console.log('Compartment - ', batterycompartment.batterycompartmenttype);
+
+      this.setState({ 
+        selectedBatterycompartment: batterycompartment, 
+        totalprice: newprice,
+        batteryconstraint: constraint,
+      });
+
+
+  } else {
+
+    
+    const oldprice1 = this.state.selectedBattery
     ? this.state.selectedBattery.price
     : 0;
      
-  const oldprice2 = this.state.selectedCharger
+    const oldprice2 = this.state.selectedCharger
     ? this.state.selectedCharger.price
     : 0;
-          
-  const newprice =
-    this.state.totalprice + batterycompartment.price - oldprice - oldprice1 - oldprice2;
-      
-  console.log('Battery Selection State');
 
-  this.setState({ 
-    selectedBatterycompartment: batterycompartment, 
-    selectedBattery: undefined,
-    selectedCharger: undefined,
-    chargers: undefined, 
-    totalprice: newprice 
-  });
+    const newprice =
+      this.state.totalprice + batterycompartment.price - oldprice - oldprice1 - oldprice2;
+
+      console.log('Battery Selection State');
+
+      this.setState({ 
+        selectedBatterycompartment: batterycompartment, 
+        selectedBattery: undefined,
+        selectedCharger: undefined,
+        chargers: undefined, 
+        totalprice: newprice,
+        batteryconstraint: constraint,
+      });
+
+  }
+  
+  
   };
 
   handleBatterySel = (battery) => {
@@ -898,7 +931,7 @@ class ForkliftDetail extends Component {
               {this.state.selectedAircon ? "Aircon " : null}
             </ConditionalWrapper>
             <br />
-            {this.state.engType == "Electric" ? (
+            {this.state.engType === "Electric" ? (
               <React.Fragment>
                 Rear Grab Handle with Horn
                 <br />
@@ -1079,14 +1112,18 @@ class ForkliftDetail extends Component {
               />
             ) : null}
 
+
+            
             {this.state.batterys && this.state.batterys.length > 0 ? (
               <Batterys
                 batterys={this.state.batterys}
                 selectedBattery={this.state.selectedBattery}
                 onBatterySel={this.handleBatterySel}
+                batteryConstraint = {this.state.batteryconstraint}
               />
             ) : null}
 
+            
             {this.state.chargers && this.state.chargers.length > 0 ? (
               <Chargers
                 chargers={this.state.chargers}
