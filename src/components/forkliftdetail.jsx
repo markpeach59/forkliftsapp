@@ -493,7 +493,7 @@ class ForkliftDetail extends Component {
 
       console.log('Standard');
 
-      const newprice =
+      newprice =
       this.state.totalprice + batterycompartment.price - oldprice;
       
 
