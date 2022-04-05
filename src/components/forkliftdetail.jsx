@@ -434,14 +434,16 @@ class ForkliftDetail extends Component {
 
     console.log("__", batterycompartment);
  var constraint = false;
- if( batterycompartment.batterycompartmenttype !== "Standard")
+ var newprice;
+ 
+ if( batterycompartment.batterycompartmenttype !== "Standard"){
     constraint=true;
 
     console.log("___", constraint)
 
     if (this.state.selectedBattery && this.state.selectedBattery.batterytype === "48V 625 A/H"){
           
-    const newprice =
+    newprice =
       this.state.totalprice + batterycompartment.price - oldprice;
       
       console.log('Battery Selection State -', this.state.selectedBattery.batterytype );
@@ -452,14 +454,10 @@ class ForkliftDetail extends Component {
         totalprice: newprice,
         batteryconstraint: constraint,
       });
+      
+     } else {
 
-
-
-
-      } else {
-
-    
-    const oldprice1 = this.state.selectedBattery
+      const oldprice1 = this.state.selectedBattery
     ? this.state.selectedBattery.price
     : 0;
      
@@ -467,14 +465,12 @@ class ForkliftDetail extends Component {
     ? this.state.selectedCharger.price
     : 0;
 
-    const newprice =
+     newprice =
       this.state.totalprice + batterycompartment.price - oldprice - oldprice1 - oldprice2;
 
-      console.log('Battery Selection State');
 
-    
-      console.log('Battery should be ', this.state.batterys[0].batterytype );
-
+      console.log('Battery must be ', this.state.batterys[0].batterytype );
+      
       const adjustedprice = newprice + this.state.batterys[0].price;
 
       this.setState({ 
@@ -485,6 +481,28 @@ class ForkliftDetail extends Component {
         totalprice: adjustedprice,
         batteryconstraint: constraint,
       });
+
+    
+
+  }
+
+
+      } else {
+
+    
+
+      console.log('Standard');
+
+      const newprice =
+      this.state.totalprice + batterycompartment.price - oldprice;
+      
+
+      this.setState({ 
+        selectedBatterycompartment: batterycompartment, 
+        totalprice: newprice,
+        batteryconstraint: constraint,
+      });
+      
 
   }
   
