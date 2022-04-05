@@ -454,7 +454,9 @@ class ForkliftDetail extends Component {
       });
 
 
-  } else {
+
+
+      } else {
 
     
     const oldprice1 = this.state.selectedBattery
@@ -470,12 +472,17 @@ class ForkliftDetail extends Component {
 
       console.log('Battery Selection State');
 
+    
+      console.log('Battery should be ', this.state.batterys[0].batterytype );
+
+      const adjustedprice = newprice + this.state.batterys[0].price;
+
       this.setState({ 
         selectedBatterycompartment: batterycompartment, 
-        selectedBattery: undefined,
+        selectedBattery: this.state.batterys[0],
         selectedCharger: undefined,
-        chargers: undefined, 
-        totalprice: newprice,
+        chargers: this.state.batterys[0].chargers, 
+        totalprice: adjustedprice,
         batteryconstraint: constraint,
       });
 
