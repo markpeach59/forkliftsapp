@@ -964,7 +964,7 @@ class ForkliftDetail extends Component {
             ) : null}
 
              
-            {(this.state.engType === "Diesel" && this.state.liftcapacity < 4000 ) ? (
+            {(this.state.engType === "Diesel" && this.state.liftcapacity < 6000 ) ? (
               <React.Fragment>
                 Rear Grab Handle with Horn
                 <br />
